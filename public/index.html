@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Byte-Sized Business Boost - Discover and support local businesses in your community">
+    <title>Byte-Sized Business Boost | Support Local Businesses</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="brand-name">Byte-Sized Business Boost</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active" onclick="showSection('home')">Home</a>
+                <a href="#businesses" class="nav-link" onclick="showSection('businesses')">Businesses</a>
+                <a href="#deals" class="nav-link" onclick="showSection('deals')">Deals</a>
+                <a href="#bookmarks" class="nav-link" id="bookmarksLink" onclick="showSection('bookmarks')" style="display: none;">My Favorites</a>
+            </div>
+            <div class="nav-auth">
+                <button class="btn btn-outline" id="loginBtn" onclick="showModal('loginModal')">Login</button>
+                <button class="btn btn-primary" id="registerBtn" onclick="showModal('registerModal')">Sign Up</button>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <span class="user-name" id="userName"></span>
+                    <button class="btn btn-outline btn-sm" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Discover & Support<br><span class="gradient-text">Local Businesses</span></h1>
+                <p class="hero-subtitle">Find the best small businesses in your community, read reviews, and enjoy exclusive deals</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary btn-lg" onclick="showSection('businesses')">Explore Businesses</button>
+                    <button class="btn btn-outline btn-lg" onclick="showSection('deals')">View Deals</button>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalBusinesses">0</div>
+                    <div class="stat-label">Local Businesses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalReviews">0</div>
+                    <div class="stat-label">Customer Reviews</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalDeals">0</div>
+                    <div class="stat-label">Active Deals</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Businesses Section -->
+    <section id="businesses" class="section" style="display: none;">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Explore Local Businesses</h2>
+                <p class="section-subtitle">Browse, search, and discover amazing businesses in your community</p>
+            </div>
+
+            <!-- Search and Filter Controls -->
+            <div class="controls-panel">
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                        <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search businesses by name or description...">
+                </div>
+                <div class="filter-controls">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="food">Food & Dining</option>
+                        <option value="retail">Retail & Shopping</option>
+                        <option value="services">Services</option>
+                    </select>
+                    <select id="sortSelect" class="filter-select">
+                        <option value="rating">Highest Rated</option>
+                        <option value="reviews">Most Reviews</option>
+                        <option value="name">Name (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Business Grid -->
+            <div class="business-grid" id="businessGrid">
+                <!-- Business cards will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Deals Section -->
+    <section id="deals" class="section" style="display: none;">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Special Deals & Coupons</h2>
+                <p class="section-subtitle">Save money with exclusive offers from local businesses</p>
+            </div>
+            <div class="deals-grid" id="dealsGrid">
+                <!-- Deal cards will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Bookmarks Section -->
+    <section id="bookmarks" class="section" style="display: none;">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">My Favorite Businesses</h2>
+                <p class="section-subtitle">Quick access to the businesses you love</p>
+            </div>
+            <div class="business-grid" id="bookmarksGrid">
+                <!-- Bookmarked businesses will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Welcome Back</h3>
+                <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail" class="form-label">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-input" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input type="password" id="loginPassword" class="form-input" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label for="loginCaptcha" class="form-label">Enter CAPTCHA</label>
+                    <div class="captcha-container">
+                        <img id="loginCaptchaImage" class="captcha-image" alt="CAPTCHA">
+                        <button type="button" class="btn-refresh-captcha" onclick="refreshCaptcha('login')" title="Refresh CAPTCHA">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.49 9C19.9828 7.56678 19.1209 6.28536 17.9845 5.27535C16.8482 4.26534 15.4745 3.55955 13.9917 3.22391C12.5089 2.88826 10.9652 2.93434 9.50481 3.35762C8.04437 3.78089 6.71475 4.56692 5.64 5.64L1 10M23 14L18.36 18.36C17.2853 19.4331 15.9556 20.2191 14.4952 20.6424C13.0348 21.0657 11.4911 21.1117 10.0083 20.7761C8.52547 20.4404 7.1518 19.7347 6.01547 18.7246C4.87913 17.7146 4.01717 16.4332 3.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <input type="text" id="loginCaptcha" class="form-input" required placeholder="Enter the text above">
+                </div>
+                <div id="loginError" class="error-message"></div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+            <div class="modal-footer">
+                Don't have an account? <a href="#" onclick="closeModal('loginModal'); showModal('registerModal')">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Account</h3>
+                <button class="modal-close" onclick="closeModal('registerModal')">&times;</button>
+            </div>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="registerName" class="form-label">Full Name</label>
+                    <input type="text" id="registerName" class="form-input" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail" class="form-label">Email Address</label>
+                    <input type="email" id="registerEmail" class="form-input" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword" class="form-label">Password</label>
+                    <input type="password" id="registerPassword" class="form-input" required placeholder="At least 6 characters with letters and numbers">
+                    <small class="form-hint">Must be at least 6 characters and contain both letters and numbers</small>
+                </div>
+                <div class="form-group">
+                    <label for="registerCaptcha" class="form-label">Enter CAPTCHA</label>
+                    <div class="captcha-container">
+                        <img id="registerCaptchaImage" class="captcha-image" alt="CAPTCHA">
+                        <button type="button" class="btn-refresh-captcha" onclick="refreshCaptcha('register')" title="Refresh CAPTCHA">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.49 9C19.9828 7.56678 19.1209 6.28536 17.9845 5.27535C16.8482 4.26534 15.4745 3.55955 13.9917 3.22391C12.5089 2.88826 10.9652 2.93434 9.50481 3.35762C8.04437 3.78089 6.71475 4.56692 5.64 5.64L1 10M23 14L18.36 18.36C17.2853 19.4331 15.9556 20.2191 14.4952 20.6424C13.0348 21.0657 11.4911 21.1117 10.0083 20.7761C8.52547 20.4404 7.1518 19.7347 6.01547 18.7246C4.87913 17.7146 4.01717 16.4332 3.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <input type="text" id="registerCaptcha" class="form-input" required placeholder="Enter the text above">
+                </div>
+                <div id="registerError" class="error-message"></div>
+                <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+            </form>
+            <div class="modal-footer">
+                Already have an account? <a href="#" onclick="closeModal('registerModal'); showModal('loginModal')">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Business Details Modal -->
+    <div id="businessModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 class="modal-title" id="businessModalTitle"></h3>
+                <button class="modal-close" onclick="closeModal('businessModal')">&times;</button>
+            </div>
+            <div id="businessModalContent">
+                <!-- Business details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Write a Review</h3>
+                <button class="modal-close" onclick="closeModal('reviewModal')">&times;</button>
+            </div>
+            <form id="reviewForm" onsubmit="handleReviewSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label">Your Rating</label>
+                    <div class="star-rating" id="starRating">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                    </div>
+                    <input type="hidden" id="reviewRating" required>
+                </div>
+                <div class="form-group">
+                    <label for="reviewText" class="form-label">Your Review (Optional)</label>
+                    <textarea id="reviewText" class="form-textarea" rows="4" placeholder="Share your experience..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="reviewCaptcha" class="form-label">Enter CAPTCHA</label>
+                    <div class="captcha-container">
+                        <img id="reviewCaptchaImage" class="captcha-image" alt="CAPTCHA">
+                        <button type="button" class="btn-refresh-captcha" onclick="refreshCaptcha('review')" title="Refresh CAPTCHA">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.49 9C19.9828 7.56678 19.1209 6.28536 17.9845 5.27535C16.8482 4.26534 15.4745 3.55955 13.9917 3.22391C12.5089 2.88826 10.9652 2.93434 9.50481 3.35762C8.04437 3.78089 6.71475 4.56692 5.64 5.64L1 10M23 14L18.36 18.36C17.2853 19.4331 15.9556 20.2191 14.4952 20.6424C13.0348 21.0657 11.4911 21.1117 10.0083 20.7761C8.52547 20.4404 7.1518 19.7347 6.01547 18.7246C4.87913 17.7146 4.01717 16.4332 3.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <input type="text" id="reviewCaptcha" class="form-input" required placeholder="Enter the text above">
+                </div>
+                <input type="hidden" id="reviewBusinessId">
+                <div id="reviewError" class="error-message"></div>
+                <button type="submit" class="btn btn-primary btn-block">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Byte-Sized Business Boost</h4>
+                    <p>Supporting local businesses, one click at a time.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>FBLA 2025-26</h4>
+                    <p>Coding & Programming Competition</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Byte-Sized Business Boost. Created for FBLA.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
