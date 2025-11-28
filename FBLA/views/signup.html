@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Local Business Reviews</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/pages.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="nav-brand">LocalReviews</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/businesses.html">Businesses</a></li>
+                <li><a href="/help.html">Help</a></li>
+                <li><a href="/login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content-wrapper">
+        <div class="auth-form-container">
+            <div class="auth-form">
+                <div class="auth-form-header">
+                    <h1>Sign Up</h1>
+                    <p class="text-secondary">Create your account to start reviewing local businesses.</p>
+                </div>
+
+                <div id="error-message" class="alert alert-error" style="display: none;"></div>
+
+                <form id="signup-form" class="form">
+                    <div class="form-group">
+                        <label for="email" class="form-label form-label-required">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-input"
+                            placeholder="Enter your email"
+                            required
+                        >
+                        <div class="form-error" id="email-error" style="display: none;"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username" class="form-label form-label-required">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            class="form-input"
+                            placeholder="Choose a username"
+                            required
+                        >
+                        <div class="form-error" id="username-error" style="display: none;"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label form-label-required">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-input"
+                            placeholder="Create a password (min 8 characters)"
+                            required
+                        >
+                        <div class="form-help">Password must be at least 8 characters long.</div>
+                        <div class="form-error" id="password-error" style="display: none;"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role" class="form-label form-label-required">Account Type</label>
+                        <select id="role" name="role" class="form-select" required>
+                            <option value="user">Regular User</option>
+                            <option value="business_owner">Business Owner</option>
+                        </select>
+                        <div class="form-help">Choose "Business Owner" if you want to post deals for your business.</div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                    </div>
+                </form>
+
+                <div class="auth-form-footer">
+                    <p>Already have an account? <a href="/login.html">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 LocalReviews. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/utils.js"></script>
+    <script src="/js/auth.js"></script>
+</body>
+</html>
