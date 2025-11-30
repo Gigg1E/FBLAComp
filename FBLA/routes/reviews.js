@@ -75,6 +75,26 @@ router.get('/user/:userId', async (req, res) => {
     }
 });
 
+// Get current user's reviews
+router.get('/my/reviews', requireAuth, async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        const reviews = await getAll(`
+            SELECT r.*, b.name as business_name, b.id as business_id
+            FROM reviews r
+            JOIN businesses b ON r.business_id = b.id
+            WHERE r.user_id = ?
+            ORDER BY r.created_at DESC
+        `, [userId]);
+
+        res.json({ reviews });
+    } catch (err) {
+        console.error('Error fetching user reviews:', err);
+        res.status(500).json({ error: 'Failed to fetch reviews' });
+    }
+});
+
 // Create a new review (requires auth and captcha)
 router.post('/', requireAuth, requireCaptcha, async (req, res) => {
     try {

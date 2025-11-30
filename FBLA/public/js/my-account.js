@@ -56,9 +56,12 @@ async function initializeAccountPage() {
     loadMyReviews();
 
     // Only show business/deals tabs for business owners and admins
-    if (currentUser.role === 'business_owner' || currentUser.role === 'admin') {
-        document.getElementById('business-tab-btn').style.display = 'block';
+    if (currentUser.user && (currentUser.user.role === 'business_owner' || currentUser.user.role === 'admin')) {
+        document.getElementById('businesses-tab-btn').style.display = 'block';
         document.getElementById('deals-tab-btn').style.display = 'block';
+
+        // Load businesses list
+        loadMyBusinessesList();
 
         // Load business data
         await loadMyBusiness();
@@ -95,8 +98,8 @@ function switchTab(tabName) {
     document.getElementById(`${tabName}-tab`).classList.add('active');
 
     // Load data for specific tabs
-    if (tabName === 'business' && currentBusiness) {
-        loadMyBusiness();
+    if (tabName === 'businesses') {
+        loadMyBusinessesList();
     } else if (tabName === 'deals' && currentBusiness) {
         loadMyDeals();
     }
@@ -109,19 +112,19 @@ function loadAccountInfo() {
     accountInfoDiv.innerHTML = `
         <div class="account-info-item">
             <span class="account-info-label">Username</span>
-            <span class="account-info-value">${currentUser.username}</span>
+            <span class="account-info-value">${currentUser.user.username}</span>
         </div>
         <div class="account-info-item">
             <span class="account-info-label">Email</span>
-            <span class="account-info-value">${currentUser.email}</span>
+            <span class="account-info-value">${currentUser.user.email}</span>
         </div>
         <div class="account-info-item">
             <span class="account-info-label">Account Type</span>
-            <span class="account-info-value">${formatRole(currentUser.role)}</span>
+            <span class="account-info-value">${formatRole(currentUser.user.role)}</span>
         </div>
         <div class="account-info-item">
             <span class="account-info-label">Member Since</span>
-            <span class="account-info-value">${formatDate(currentUser.created_at)}</span>
+            <span class="account-info-value">${formatDate(currentUser.user.created_at)}</span>
         </div>
     `;
 }
@@ -167,82 +170,92 @@ async function loadMyReviews() {
     }
 }
 
+// Load list of businesses for "My Businesses" tab
+async function loadMyBusinessesList() {
+    try {
+        const data = await apiCall('/api/businesses/my/business');
+        const businessesListDiv = document.getElementById('businesses-list');
+        
+        if (!data.business) {
+            businessesListDiv.innerHTML = `
+                <div class="empty-state">
+                    <p>You haven't created any businesses yet</p>
+                    <p class="text-secondary">Click the "Add Business" button to get started</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Display the business as a card
+        const business = data.business;
+        businessesListDiv.innerHTML = `
+            <div class="card" style="padding: 1.5rem; margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: start;">
+                    <div>
+                        <h3 style="margin: 0 0 0.5rem 0;">${escapeHtml(business.name)}</h3>
+                        <p class="text-secondary" style="margin: 0 0 0.5rem 0;">${escapeHtml(business.category)}</p>
+                        <p class="text-secondary" style="margin: 0; font-size: 0.9rem;">
+                            ${escapeHtml(business.city)}, ${escapeHtml(business.state)}
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-sm btn-primary" onclick="viewBusinessDetails()">View</button>
+                        <button class="btn btn-sm btn-outline" onclick="editBusinessFromList()">Edit</button>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; display: flex; align-items: center; gap: 1rem;">
+                    ${renderStars(business.average_rating)}
+                    <span class="text-secondary">${business.review_count} reviews</span>
+                </div>
+            </div>
+        `;
+    } catch (err) {
+        console.error('Error loading businesses list:', err);
+        document.getElementById('businesses-list').innerHTML = `
+            <div class="empty-state">
+                <p>You haven't created any businesses yet</p>
+            </div>
+        `;
+    }
+}
+
+// View business details (switch to My Business tab)
+function viewBusinessDetails() {
+    if (!currentBusiness) return;
+    
+    alert(`Business: ${currentBusiness.name}\nCategory: ${currentBusiness.category}\nRating: ${currentBusiness.average_rating.toFixed(1)} (${currentBusiness.review_count} reviews)\n\nClick Edit to modify your business details.`);
+}
+
+// Edit business from list (open modal)
+function editBusinessFromList() {
+    showBusinessForm(true);
+}
+
 // Load user's business
 async function loadMyBusiness() {
     try {
         const data = await apiCall('/api/businesses/my/business');
         currentBusiness = data.business;
 
-        const noBusiness = document.getElementById('no-business');
-        const businessForm = document.getElementById('business-form-container');
-        const businessDisplay = document.getElementById('business-display');
-
-        if (!currentBusiness) {
-            // Show "no business" state
-            noBusiness.style.display = 'block';
-            businessForm.style.display = 'none';
-            businessDisplay.style.display = 'none';
-
-            // Update deals tab
-            document.getElementById('no-business-deals').style.display = 'block';
-            document.getElementById('deals-section').style.display = 'none';
-        } else {
-            // Show business display
-            noBusiness.style.display = 'none';
-            businessForm.style.display = 'none';
-            businessDisplay.style.display = 'block';
-
-            displayBusiness(currentBusiness);
-
-            // Update deals tab
+        // Update deals tab visibility
+        if (currentBusiness) {
             document.getElementById('no-business-deals').style.display = 'none';
             document.getElementById('deals-section').style.display = 'block';
+        } else {
+            document.getElementById('no-business-deals').style.display = 'block';
+            document.getElementById('deals-section').style.display = 'none';
         }
     } catch (err) {
         console.error('Error loading business:', err);
-        showError('business-tab', 'Failed to load business information');
     }
 }
 
-// Display business information
-function displayBusiness(business) {
-    const displayDiv = document.getElementById('business-summary');
-
-    displayDiv.innerHTML = `
-        <div class="business-header">
-            <h3>${escapeHtml(business.name)}</h3>
-            <div class="business-rating-summary">
-                <div class="rating-number">${business.average_rating.toFixed(1)}</div>
-                <div class="rating-details">
-                    ${renderStars(business.average_rating)}
-                    <div>${business.review_count} reviews</div>
-                </div>
-            </div>
-        </div>
-
-        ${business.image_url ? `<img src="${business.image_url}" alt="${escapeHtml(business.name)}" style="max-width: 100%; border-radius: var(--border-radius); margin: var(--spacing-md) 0;">` : ''}
-
-        <div class="business-info">
-            <div class="business-info-item"><strong>Category:</strong> ${escapeHtml(business.category)}</div>
-            <div class="business-info-item"><strong>Address:</strong> ${escapeHtml(business.address)}, ${escapeHtml(business.city)}, ${escapeHtml(business.state)} ${escapeHtml(business.zip_code)}</div>
-            ${business.phone ? `<div class="business-info-item"><strong>Phone:</strong> ${escapeHtml(business.phone)}</div>` : ''}
-            ${business.email ? `<div class="business-info-item"><strong>Email:</strong> ${escapeHtml(business.email)}</div>` : ''}
-            ${business.website ? `<div class="business-info-item"><strong>Website:</strong> <a href="${business.website}" target="_blank">${escapeHtml(business.website)}</a></div>` : ''}
-            <div class="business-info-item"><strong>Description:</strong> ${escapeHtml(business.description)}</div>
-            ${business.products ? `<div class="business-info-item"><strong>Products/Services:</strong> ${escapeHtml(business.products)}</div>` : ''}
-        </div>
-
-        <div class="business-summary-actions">
-            <button class="btn btn-primary" onclick="editBusiness()">Edit Business</button>
-        </div>
-    `;
-}
-
-// Show business form (create or edit mode)
+// Show business form (create or edit mode) in modal
 function showBusinessForm(editing = false) {
-    document.getElementById('no-business').style.display = 'none';
-    document.getElementById('business-form-container').style.display = 'block';
-    document.getElementById('business-display').style.display = 'none';
+    const modal = document.getElementById('business-form-modal');
+    const formTitle = document.getElementById('business-form-title');
+    
+    modal.style.display = 'block';
 
     // Clear any previous errors
     document.getElementById('form-errors').style.display = 'none';
@@ -251,6 +264,7 @@ function showBusinessForm(editing = false) {
 
     // If editing, populate form
     if (editing && currentBusiness) {
+        formTitle.textContent = 'Edit Business';
         document.getElementById('business-name').value = currentBusiness.name || '';
         document.getElementById('business-category').value = currentBusiness.category || '';
         document.getElementById('business-address').value = currentBusiness.address || '';
@@ -274,6 +288,7 @@ function showBusinessForm(editing = false) {
         }
     } else {
         // Reset form for new business
+        formTitle.textContent = 'Add Business';
         document.getElementById('business-form').reset();
         document.getElementById('delete-business-btn').style.display = 'none';
         document.getElementById('save-business-btn').textContent = 'Save Business';
@@ -287,15 +302,7 @@ function editBusiness() {
 }
 
 function cancelBusinessForm() {
-    if (currentBusiness) {
-        // Go back to display mode
-        document.getElementById('business-form-container').style.display = 'none';
-        document.getElementById('business-display').style.display = 'block';
-    } else {
-        // Go back to no business state
-        document.getElementById('business-form-container').style.display = 'none';
-        document.getElementById('no-business').style.display = 'block';
-    }
+    document.getElementById('business-form-modal').style.display = 'none';
 }
 
 // Image preview
@@ -360,6 +367,7 @@ async function saveBusiness(event) {
 
         // Reload business data
         await loadMyBusiness();
+        await loadMyBusinessesList();
 
         // Switch to display mode after short delay
         setTimeout(() => {
@@ -389,6 +397,7 @@ async function deleteBusiness() {
         // Reload business section
         setTimeout(() => {
             loadMyBusiness();
+            loadMyBusinessesList();
         }, 1500);
 
     } catch (err) {
@@ -581,11 +590,15 @@ function setupEventListeners() {
     // Logout button
     document.getElementById('logout-btn').addEventListener('click', logout);
 
-    // Business management buttons
-    const createBusinessBtn = document.getElementById('create-business-btn');
-    if (createBusinessBtn) {
-        createBusinessBtn.addEventListener('click', () => showBusinessForm(false));
+    // Add Business button (in My Businesses tab)
+    const addBusinessBtn = document.getElementById('add-business-btn');
+    if (addBusinessBtn) {
+        addBusinessBtn.addEventListener('click', () => {
+            showBusinessForm(false);
+        });
     }
+
+    // Business management buttons (removed create-business-btn since it's not needed anymore)
 
     document.getElementById('cancel-business-btn').addEventListener('click', cancelBusinessForm);
     document.getElementById('delete-business-btn').addEventListener('click', deleteBusiness);

@@ -13,12 +13,7 @@
     <header class="header">
         <nav class="nav container">
             <a href="/" class="nav-brand">LocalReviews</a>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/businesses.html">Businesses</a></li>
-                <li><a href="/help.html">Help</a></li>
-                <li><a href="/signup.html">Sign Up</a></li>
-            </ul>
+            <ul class="nav-links"></ul>
         </nav>
     </header>
 
@@ -29,7 +24,7 @@
             <div class="account-tabs">
                 <button class="tab-btn active" data-tab="info">Account Info</button>
                 <button class="tab-btn" data-tab="reviews">My Reviews</button>
-                <button class="tab-btn" data-tab="business" id="business-tab-btn" style="display:none;">My Business</button>
+                <button class="tab-btn" data-tab="businesses" id="businesses-tab-btn" style="display:none;">My Businesses</button>
                 <button class="tab-btn" data-tab="deals" id="deals-tab-btn" style="display:none;">My Deals</button>
             </div>
 
@@ -51,24 +46,22 @@
                 <div id="my-reviews"></div>
             </div>
 
-            <!-- My Business Tab -->
-            <div class="tab-content" id="business-tab">
-                <h2>My Business</h2>
-
-                <!-- No business state -->
-                <div id="no-business" style="display:none;">
-                    <div class="empty-state">
-                        <p>You haven't created a business yet</p>
-                        <button id="create-business-btn" class="btn btn-primary mt-md">Create Business</button>
-                    </div>
+            <!-- My Businesses Tab -->
+            <div class="tab-content" id="businesses-tab">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="margin: 0;">My Businesses</h2>
+                    <button id="add-business-btn" class="btn btn-primary">+ Add Business</button>
                 </div>
+                <div id="businesses-list"></div>
+                
+                <!-- Business form modal (create/edit) -->
+                <div id="business-form-modal" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; overflow-y: auto;">
+                    <div style="background: white; max-width: 800px; margin: 2rem auto; padding: 2rem; border-radius: 8px;">
+                        <h2 id="business-form-title">Add Business</h2>
+                        <div id="form-errors" class="alert alert-error" style="display:none;"></div>
+                        <div id="form-success" class="alert alert-success" style="display:none;"></div>
 
-                <!-- Business form (create/edit) -->
-                <div id="business-form-container" style="display:none;">
-                    <div id="form-errors" class="alert alert-error" style="display:none;"></div>
-                    <div id="form-success" class="alert alert-success" style="display:none;"></div>
-
-                    <form id="business-form" class="form">
+                        <form id="business-form" class="form">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="business-name" class="form-label form-label-required">Business Name</label>
@@ -151,11 +144,7 @@
                             <button type="button" class="btn btn-outline" id="delete-business-btn" style="display:none;">Delete Business</button>
                         </div>
                     </form>
-                </div>
-
-                <!-- Business display -->
-                <div id="business-display" style="display:none;">
-                    <div class="business-summary-card" id="business-summary"></div>
+                    </div>
                 </div>
             </div>
 
@@ -229,5 +218,11 @@
 
     <script src="/js/utils.js"></script>
     <script src="/js/my-account.js"></script>
+    <script>
+        // Initialize navbar
+        document.addEventListener('DOMContentLoaded', async () => {
+            await initializePage();
+        });
+    </script>
 </body>
 </html>
