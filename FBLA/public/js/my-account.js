@@ -214,7 +214,6 @@ async function loadMyBusinessesList() {
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
                         <button class="btn btn-sm btn-primary" onclick="viewBusinessDetails()">View</button>
-                        <button class="btn btn-sm btn-primary" onclick="loadBusinessDetails()">View</button>
                         <button class="btn btn-sm btn-outline" onclick="editBusinessFromList()">Edit</button>
                     </div>
                 </div>
