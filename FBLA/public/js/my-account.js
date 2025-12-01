@@ -214,6 +214,7 @@ async function loadMyBusinessesList() {
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
                         <button class="btn btn-sm btn-primary" onclick="viewBusinessDetails()">View</button>
+                        <button class="btn btn-sm btn-primary" onclick="loadBusinessDetails()">View</button>
                         <button class="btn btn-sm btn-outline" onclick="editBusinessFromList()">Edit</button>
                     </div>
                 </div>
@@ -234,23 +235,15 @@ async function loadMyBusinessesList() {
 }
 
 // View business details (switch to My Business tab)
-async function viewBusinessDetails() {
+async function viewBusinessDetails(businessId) {
     const data = await apiCall('/api/businesses/my/business');
     const currentBusiness = data.business;
-    //const businessViewPage = document.getElementById('business-view-page');
-    
-    console.log('Viewing business ID:', currentBusiness.id);
-    console.log('Business details:', currentBusiness);
-    const businessViewPage = `/business.html?id=${currentBusiness.id}`;
-    console.log('Business view iframe:', businessViewPage);
-    
-    switchTab(businessViewPage);
+    const businessViewPage = `/business-detail.html?id=${currentBusiness.id}`;
 
-    // Ensure the business view loads the correct business on tab switch
-    //business
-    //ViewPage.onload = () => {
-      //  businessViewPage.contentWindow.location.reload();
-    //}
+    if (!businessId) {
+        window.location.href = businessViewPage;
+        return;
+    }
 }
 
 // Edit business from list (open modal)
