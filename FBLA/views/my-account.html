@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - LocalReviews</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/pages.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="nav-brand">LocalReviews</a>
+            <ul class="nav-links"></ul>
+        </nav>
+    </header>
+
+    <main class="content-wrapper">
+        <div class="container">
+            <h1>My Account</h1>
+
+            <div class="account-tabs">
+                <button class="tab-btn active" data-tab="info">Account Info</button>
+                <button class="tab-btn" data-tab="reviews">My Reviews</button>
+                <button class="tab-btn" data-tab="businesses" id="businesses-tab-btn" style="display:none;">My Businesses</button>
+                <button class="tab-btn" data-tab="deals" id="deals-tab-btn" style="display:none;">My Deals</button>
+            </div>
+
+            <!-- Account Info Tab -->
+            <div class="tab-content active" id="info-tab">
+                <div class="account-section">
+                    <h2>Account Information</h2>
+                    <div class="account-info" id="account-info"></div>
+                </div>
+
+                <div class="mt-lg">
+                    <button id="logout-btn" class="btn btn-secondary">Logout</button>
+                </div>
+            </div>
+
+            <!-- My Reviews Tab -->
+            <div class="tab-content" id="reviews-tab">
+                <h2>My Reviews</h2>
+                <div id="my-reviews"></div>
+            </div>
+
+            <!-- My Businesses Tab -->
+            <div class="tab-content" id="businesses-tab">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="margin: 0;">My Businesses</h2>
+                    <button id="add-business-btn" class="btn btn-primary">+ Add Business</button>
+                </div>
+                <div id="businesses-list"></div>
+                
+                <!-- Business form modal (create/edit) -->
+                <div id="business-form-modal" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; overflow-y: auto;">
+                    <div style="background: white; max-width: 800px; margin: 2rem auto; padding: 2rem; border-radius: 8px;">
+                        <h2 id="business-form-title">Add Business</h2>
+                        <div id="form-errors" class="alert alert-error" style="display:none;"></div>
+                        <div id="form-success" class="alert alert-success" style="display:none;"></div>
+
+                        <form id="business-form" class="form" enctype="multipart/form-data">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="business-name" class="form-label form-label-required">Business Name</label>
+                                <input type="text" id="business-name" class="form-input" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="business-category" class="form-label form-label-required">Category</label>
+                                <select id="business-category" class="form-select" required>
+                                    <option value="">Select a category</option>
+                                    <option value="Restaurant">Restaurant</option>
+                                    <option value="Cafe">Cafe</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Garden Center">Garden Center</option>
+                                    <option value="Fitness">Fitness</option>
+                                    <option value="Auto Repair">Auto Repair</option>
+                                    <option value="Bakery">Bakery</option>
+                                    <option value="Bookstore">Bookstore</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="business-address" class="form-label form-label-required">Street Address</label>
+                            <input type="text" id="business-address" class="form-input" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="business-city" class="form-label form-label-required">City</label>
+                                <input type="text" id="business-city" class="form-input" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="business-state" class="form-label form-label-required">State</label>
+                                <input type="text" id="business-state" class="form-input" required maxlength="2" placeholder="IL">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="business-zip" class="form-label form-label-required">ZIP Code</label>
+                                <input type="text" id="business-zip" class="form-input" required maxlength="5">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="business-image" class="form-label form-label-required">Business Image</label>
+                            <input type="file"
+                                   id="business-image"
+                                   class="form-input"
+                                   accept="image/jpeg,image/jpg,image/png,image/gif"
+                                   required>
+                            <div class="form-help">Upload JPG, PNG, or GIF (max 10 MB, will be auto-resized to 1200x800)</div>
+                            <div id="file-info" class="form-help" style="display: none;"></div>
+                            <div id="image-preview" class="image-preview empty">No image selected</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label form-label-required">Contact Information (at least one required)</label>
+                            <div class="mb-sm">
+                                <input type="tel" id="business-phone" class="form-input" placeholder="Phone: (555) 123-4567">
+                            </div>
+                            <div class="mb-sm">
+                                <input type="email" id="business-email" class="form-input" placeholder="Email: contact@business.com">
+                            </div>
+                            <div>
+                                <input type="url" id="business-website" class="form-input" placeholder="Website: https://www.business.com">
+                            </div>
+                            <div class="form-error" id="contact-error" style="display:none;"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="business-description" class="form-label form-label-required">Description</label>
+                            <textarea id="business-description" class="form-textarea" required placeholder="Describe your business..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="business-products" class="form-label">Products/Services (Optional)</label>
+                            <textarea id="business-products" class="form-textarea" placeholder="What do you sell or offer?"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="save-business-btn">Save Business</button>
+                            <button type="button" class="btn btn-secondary" id="cancel-business-btn">Cancel</button>
+                            <button type="button" class="btn btn-outline" id="delete-business-btn" style="display:none;">Delete Business</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Deals Tab -->
+            <div class="tab-content" id="deals-tab">
+                <h2>My Deals</h2>
+
+                <div id="no-business-deals" style="display:none;">
+                    <div class="empty-state">
+                        <p>Create a business first to post deals</p>
+                    </div>
+                </div>
+
+                <div id="deals-section" style="display:none;">
+                    <button id="add-deal-btn" class="btn btn-primary mb-lg">Add New Deal</button>
+
+                    <div id="deals-list"></div>
+
+                    <!-- Deal form -->
+                    <div id="deal-form-container" style="display:none;">
+                        <h3 id="deal-form-title">Add New Deal</h3>
+                        <div id="deal-errors" class="alert alert-error" style="display:none;"></div>
+                        <div id="deal-success" class="alert alert-success" style="display:none;"></div>
+
+                        <form id="deal-form" class="form">
+                            <input type="hidden" id="deal-id">
+
+                            <div class="form-group">
+                                <label for="deal-title" class="form-label form-label-required">Deal Title</label>
+                                <input type="text" id="deal-title" class="form-input" required placeholder="e.g., 2-for-1 Pizza Tuesday">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="deal-description" class="form-label form-label-required">Description</label>
+                                <textarea id="deal-description" class="form-textarea" required placeholder="Describe the deal in detail..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="deal-discount" class="form-label">Discount Amount</label>
+                                <input type="text" id="deal-discount" class="form-input" placeholder="e.g., 20% off, BOGO, $10 off">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="deal-start" class="form-label form-label-required">Start Date</label>
+                                    <input type="date" id="deal-start" class="form-input" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="deal-end" class="form-label form-label-required">End Date</label>
+                                    <input type="date" id="deal-end" class="form-input" required>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Deal</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-deal-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 LocalReviews. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/utils.js"></script>
+    <script src="/js/my-account.js"></script>
+    <script>
+        // Initialize navbar
+        document.addEventListener('DOMContentLoaded', async () => {
+            await initializePage();
+        });
+    </script>
+</body>
+</html>

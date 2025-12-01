@@ -1,0 +1,29 @@
+{
+  "name": "local-business-reviews",
+  "version": "1.0.0",
+  "description": "A local business review website where users can rate, review, and find deals",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "init-db": "node config/database.js"
+  },
+  "keywords": [
+    "business",
+    "reviews",
+    "ratings",
+    "deals"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "multer": "^2.0.2",
+    "sharp": "^0.34.5",
+    "sqlite3": "^5.1.6",
+    "uuid": "^9.0.0"
+  }
+}
