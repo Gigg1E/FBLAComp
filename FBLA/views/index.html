@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Business Reviews - Find and Review Local Businesses</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/pages.css"> 
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="nav-brand">LocalReviews</a>
+            <ul class="nav-links">
+                <!-- Navigation will be updated by JavaScript -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">Find Local Businesses You'll Love</h1>
+                <p class="hero-subtitle">Read reviews, find great deals, and support local businesses</p>
+                <div class="hero-search">
+                    <form id="search-form" action="/businesses.html" method="GET">
+                        <div class="search-input">
+                            <span class="search-icon">🔍</span>
+                            <input
+                                type="text"
+                                name="search"
+                                class="form-input"
+                                placeholder="Search for businesses..."
+                            >
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <div class="container content-wrapper">
+            <section class="mb-xl">
+                <h2 class="section-title">Featured Businesses</h2>
+                <div id="featured-businesses" class="grid grid-cols-3">
+                    <!-- Businesses will be loaded here -->
+                </div>
+                <div class="text-center mt-lg">
+                    <a href="/businesses.html" class="btn btn-primary">View All Businesses</a>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="section-title">Active Deals</h2>
+                <div id="active-deals" class="deals-grid">
+                    <!-- Deals will be loaded here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 LocalReviews. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/utils.js"></script>
+    <script>
+        // Load featured businesses
+        async function loadFeaturedBusinesses() {
+            try {
+                const data = await apiCall('/api/businesses?limit=6');
+                const container = document.getElementById('featured-businesses');
+
+                if (data.businesses.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><p>No businesses found</p></div>';
+                    return;
+                }
+
+                container.innerHTML = data.businesses.map(business => `
+                    <div class="card business-card" onclick="window.location.href='/business-detail.html?id=${business.id}'">
+                        <span class="business-card-category">${business.category}</span>
+                        <h3 class="card-title">${business.name}</h3>
+                        <div class="flex gap-sm mb-sm">
+                            ${createStarRating(Math.round(business.average_rating)).outerHTML}
+                            <span class="text-secondary text-sm">(${business.review_count} reviews)</span>
+                        </div>
+                        <p class="text-secondary text-sm">${business.city}, ${business.state}</p>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Error loading businesses:', err);
+            }
+        }
+
+        // Load active deals
+        async function loadActiveDeals() {
+            try {
+                const data = await apiCall('/api/deals?limit=3');
+                const container = document.getElementById('active-deals');
+
+                if (data.deals.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><p>No active deals at the moment</p></div>';
+                    return;
+                }
+
+                container.innerHTML = data.deals.map(deal => `
+                    <div class="card deal-card" onclick="window.location.href='/business-detail.html?id=${deal.business_id}'">
+                        <div class="deal-card-header">
+                            <div>
+                                <p class="deal-business">${deal.business_name}</p>
+                                <h3 class="deal-title">${deal.title}</h3>
+                            </div>
+                            <div class="deal-tag">${deal.discount_amount}</div>
+                        </div>
+                        <p class="text-secondary">${deal.description}</p>
+                        <p class="deal-dates text-sm">Valid until ${formatDate(deal.end_date)}</p>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Error loading deals:', err);
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', async () => {
+            await initializePage();
+            loadFeaturedBusinesses();
+            loadActiveDeals();
+        });
+    </script>
+</body>
+</html>
