@@ -11,6 +11,7 @@ const path = require('path');
 // Import database functions
 // Make sure this path is correct: server.js and config/ are in the same folder
 const { initializeDatabase, cleanupExpiredSessions } = require('./config/database');
+const { execFileSync } = require('child_process');
 
 // Import route modules
 const authRoutes = require('./routes/auth');
@@ -106,6 +107,14 @@ async function startServer() {
     try {
         // Initialize database tables if not exist
         await initializeDatabase();
+        // Run any lightweight migrations (add missing columns) synchronously
+        try {
+            const migPath = path.join(__dirname, 'scripts', 'add-products-column.js');
+            execFileSync('node', [migPath], { stdio: 'inherit' });
+            console.log('Migrations ran successfully');
+        } catch (err) {
+            console.error('Migration script error (non-fatal):', err.message || err);
+        }
         console.log('Database initialized');
 
         // Clean up expired sessions on startup
