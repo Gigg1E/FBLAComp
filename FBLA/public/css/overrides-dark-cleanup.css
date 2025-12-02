@@ -1,0 +1,42 @@
+/* Strong overrides for dark theme to remove any accidental blue/neon artifacts
+   and enforce neutral/warm shadows and borders. Loaded after other CSS.
+*/
+html[data-theme="dark"] {
+    /* Force neutral/warm shadow tokens if needed */
+}
+
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .business-summary-card,
+html[data-theme="dark"] .review-card,
+html[data-theme="dark"] .deal-card,
+html[data-theme="dark"] .info-card,
+html[data-theme="dark"] .footer-banner,
+html[data-theme="dark"] .auth-form {
+    background: var(--bg-primary) !important;
+    border: 1px solid rgba(255,255,255,0.02) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+}
+
+/* Info rows should have NO background or border */
+html[data-theme="dark"] .info-row {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Remove any bright blue focus/outline remnants */
+html[data-theme="dark"] .form-input:focus,
+html[data-theme="dark"] .form-select:focus,
+html[data-theme="dark"] .form-textarea:focus,
+html[data-theme="dark"] :focus {
+    box-shadow: 0 0 0 3px rgba(122,92,72,0.10) !important;
+    outline: none !important;
+}
+
+/* Make sure info alert isn't blue */
+html[data-theme="dark"] .alert-info {
+    background-color: rgba(250,244,238,0.03) !important;
+    border-color: rgba(200,180,160,0.04) !important;
+    color: var(--text-primary) !important;
+}

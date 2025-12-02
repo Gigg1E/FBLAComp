@@ -1,0 +1,197 @@
+/* Dark theme overrides and polished UI animations */
+html[data-theme="dark"] {
+    --accent-color: #9fb7a5; /* muted sage accent for dark theme */
+    /* Color scale - warm calming accents for dark theme */
+    --primary-color: #c9a388; /* soft warm clay highlight */
+    --primary-hover: #b08a6f; /* deeper warm tone */
+    --secondary-color: #77807f; /* muted slate */
+    --success-color: #6b8b74; /* muted green */
+    --error-color: #a85b4a; /* warm error */
+    --warning-color: #b38861; /* warm accent */
+
+    --text-primary: #f3efe9; /* soft warm light */
+    --text-secondary: #bdb3aa; /* muted warm grey */
+    --text-light: #9b9188;
+
+    --bg-primary: #0d0f10; /* very dark charcoal */
+    --bg-secondary: #070808; /* near-black background */
+    --bg-tertiary: rgba(243,239,233,0.02);
+
+    --border-color: rgba(243,239,233,0.03); /* subtle border */
+    --shadow-sm: 0 8px 28px rgba(2,6,23,0.6);
+    --shadow-md: 0 18px 48px rgba(2,6,23,0.65);
+    --shadow-lg: 0 30px 80px rgba(2,6,23,0.75);
+}
+
+/* Smooth transitions with enhanced animations */
+a, .btn, .card, .form-input, .business-card, .nav-links a, .badge, .deal-card {
+    transition: color 220ms cubic-bezier(.2,.9,.2,1),
+                background-color 220ms cubic-bezier(.2,.9,.2,1),
+                box-shadow 220ms cubic-bezier(.2,.9,.2,1),
+                transform 220ms cubic-bezier(.2,.9,.2,1),
+                border-color 220ms cubic-bezier(.2,.9,.2,1),
+                filter 220ms cubic-bezier(.2,.9,.2,1);
+}
+
+/* Page background & body */
+body {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header: sleek grey glass effect with subtle pink */
+.header {
+    background: linear-gradient(180deg, rgba(26,26,26,0.85), rgba(26,26,26,0.6));
+    border-bottom: 1px solid rgba(240,179,201,0.08);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px) saturate(120%);
+}
+
+.nav-brand {
+    color: var(--accent-color) !important;
+}
+
+.nav-links a {
+    color: var(--text-primary) !important;
+    opacity: 0.92;
+}
+
+.nav-links a:hover {
+    color: var(--primary-hover) !important;
+    transform: translateY(-2px);
+}
+
+/* Hero: subtle grey tones */
+.hero {
+    /* subtle warm tint overlay for dark theme hero */
+    background: linear-gradient(135deg, rgba(201,162,138,0.06) 0%, rgba(201,162,138,0.02) 100%);
+    color: var(--text-primary);
+}
+
+.hero-title, .hero-subtitle {
+    text-shadow: 0 4px 30px rgba(0,0,0,0.7);
+}
+
+/* Cards: dark surface with subtle lift on hover */
+.card {
+    background-color: var(--bg-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4) !important;
+}
+
+.business-card-category {
+    background-color: rgba(240,179,201,0.08);
+    color: var(--text-secondary);
+}
+
+.business-card:hover .business-card-category {
+    background-color: rgba(240,179,201,0.16);
+    color: var(--primary-color);
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(180deg, var(--primary-color), var(--primary-hover));
+    color: #ffffff; /* ensure readable on navy */
+    box-shadow: 0 6px 18px rgba(2,6,23,0.5);
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid rgba(255,255,255,0.06);
+    color: var(--text-primary);
+}
+
+.btn-outline:hover:not(:disabled) {
+    background-color: rgba(255,255,255,0.03);
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+}
+
+/* Links */
+a:hover {
+    color: var(--primary-hover) !important;
+    text-decoration: underline;
+}
+
+/* Forms */
+.form-input,
+.form-select,
+.form-textarea {
+    background-color: rgba(201,155,163,0.01);
+    border: 1px solid rgba(201,155,163,0.08);
+    color: var(--text-primary);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: rgba(153,153,153,0.6);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    box-shadow: 0 0 0 2px rgba(201,155,163,0.08);
+    border-color: var(--primary-color);
+}
+
+/* Badges, tags, deal tag */
+.badge {
+    background-color: rgba(240,179,201,0.12);
+    color: var(--text-primary);
+}
+
+.deal-tag {
+    background-color: rgba(240,179,201,0.15);
+    border: 1px solid rgba(240,179,201,0.25);
+    color: #f0b3c9;
+}
+
+.deal-card {
+    border-left: 4px solid rgba(240,179,201,0.2);
+}
+
+/* Star rating tweaks for dark grey palette */
+.star { color: rgba(232,232,232,0.15); }
+.star.filled { color: #f0b3c9; filter: drop-shadow(0 4px 10px rgba(240,179,201,0.12)); }
+
+/* Empty state */
+.empty-state { color: var(--text-secondary); }
+
+/* Modal */
+.modal { background-color: var(--bg-primary) !important; box-shadow: var(--shadow-lg) !important; }
+
+/* Footer */
+.footer { background: transparent; color: var(--text-secondary); border-top: 1px solid rgba(240,179,201,0.08); }
+
+/* Small polished utilities */
+.text-primary { color: var(--primary-color) !important; }
+.text-secondary { color: var(--text-secondary) !important; }
+
+/* Accessibility focus visible */
+:focus { outline: 3px solid rgba(240,179,201,0.2); outline-offset: 2px; }
+
+/* Reduce motion for users that prefer it */
+@media (prefers-reduced-motion: reduce) {
+    .card, .btn, .business-card { transition: none !important; transform: none !important; }
+}
+
+/* Small responsive tweak */
+@media (max-width: 768px) {
+    .nav { padding: 8px 0; }
+    .hero { padding: 36px 0; }
+}
+
+/* End of dark theme */

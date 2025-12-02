@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Details - LocalReviews</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/dark-theme.css">
+    <link rel="stylesheet" href="/css/overrides-dark-cleanup.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="nav-brand">LocalReviews</a>
+            <ul class="nav-links"></ul>
+            <!-- theme toggle removed; site uses dark theme only -->
+        </nav>
+    </header>
+
+    <main class="content-wrapper">
+        <div class="container">
+            <div id="business-header" class="business-header"></div>
+
+            <div id="deals-section" class="mb-lg"></div>
+
+            <section class="mb-lg">
+                <div class="flex-between mb-md">
+                    <h2>Reviews</h2>
+                    <button id="write-review-btn" class="btn btn-primary" style="display: none;">Write a Review</button>
+                </div>
+                <div id="reviews-container"></div>
+                <div id="reviews-pagination" class="pagination"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 LocalReviews. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/utils.js"></script>
+    <script src="/js/business-detail.js"></script>
+</body>
+</html>

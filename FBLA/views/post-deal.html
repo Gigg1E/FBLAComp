@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Deal - LocalReviews</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/dark-theme.css">
+    <link rel="stylesheet" href="/css/overrides-dark-cleanup.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="nav-brand">LocalReviews</a>
+            <ul class="nav-links"></ul>
+            <!-- theme toggle removed; site uses dark theme only -->
+        </nav>
+    </header>
+
+    <main class="content-wrapper">
+        <div class="container-narrow">
+            <h1>Post a Deal</h1>
+
+            <div class="card">
+                <div id="error-message" class="alert alert-error" style="display: none;"></div>
+                <div id="success-message" class="alert alert-success" style="display: none;"></div>
+
+                <form id="deal-form" class="form">
+                    <div class="form-group">
+                        <label for="businessId" class="form-label form-label-required">Select Business</label>
+                        <select id="businessId" class="form-select" required>
+                            <option value="">Loading businesses...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title" class="form-label form-label-required">Deal Title</label>
+                        <input
+                            type="text"
+                            id="title"
+                            class="form-input"
+                            placeholder="e.g., 2-for-1 Pizza Tuesday"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="form-label form-label-required">Description</label>
+                        <textarea
+                            id="description"
+                            class="form-textarea"
+                            placeholder="Describe the deal in detail..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="discountAmount" class="form-label">Discount Amount</label>
+                        <input
+                            type="text"
+                            id="discountAmount"
+                            class="form-input"
+                            placeholder="e.g., 20% off, BOGO, $10 off"
+                        >
+                        <div class="form-help">Optional: Specify the discount (e.g., "20% off", "Buy 1 Get 1 Free")</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate" class="form-label form-label-required">Start Date</label>
+                            <input
+                                type="date"
+                                id="startDate"
+                                class="form-input"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="endDate" class="form-label form-label-required">End Date</label>
+                            <input
+                                type="date"
+                                id="endDate"
+                                class="form-input"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Post Deal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 LocalReviews. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/utils.js"></script>
+    <script src="/js/deals.js"></script>
+</body>
+</html>
