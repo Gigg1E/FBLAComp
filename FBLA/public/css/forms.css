@@ -41,7 +41,8 @@
 .form-textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    /* warm soft focus ring instead of bright blue */
+    box-shadow: 0 0 0 3px rgba(122,92,72,0.10);
 }
 
 .form-input::placeholder,
@@ -66,7 +67,7 @@
 .form-input.error:focus,
 .form-select.error:focus,
 .form-textarea.error:focus {
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    box-shadow: 0 0 0 3px rgba(168,89,74,0.12);
 }
 
 /* Textarea specific */
@@ -192,28 +193,28 @@ input[type="file"].form-input {
     padding: 0.5rem;
     cursor: pointer;
     border: 2px dashed var(--border-color);
-    background: var(--bg-secondary, #f5f5f5);
+    background: var(--bg-secondary);
 }
 
 input[type="file"].form-input:hover {
     border-color: var(--primary-color);
-    background: var(--bg-hover, #e5e7eb);
+    background: var(--bg-tertiary);
 }
 
 input[type="file"].form-input::-webkit-file-upload-button {
     padding: 0.5rem 1rem;
-    background: var(--primary-color, #2563eb);
-    color: white;
+    background: var(--primary-color);
+    color: var(--bg-secondary);
     border: none;
-    border-radius: var(--border-radius-sm, 4px);
+    border-radius: var(--border-radius-sm);
     cursor: pointer;
     margin-right: 1rem;
     font-weight: 500;
-    font-size: var(--font-size-sm, 0.875rem);
+    font-size: var(--font-size-sm);
 }
 
 input[type="file"].form-input::-webkit-file-upload-button:hover {
-    background: var(--primary-hover, #1d4ed8);
+    background: var(--primary-hover);
 }
 
 #file-info {

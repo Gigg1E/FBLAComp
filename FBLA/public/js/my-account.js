@@ -203,21 +203,21 @@ async function loadMyBusinessesList() {
         // Display the business as a card
         const business = data.business;
         businessesListDiv.innerHTML = `
-            <div class="card" style="padding: 1.5rem; margin-bottom: 1rem;">
-                <div style="display: flex; justify-content: space-between; align-items: start;">
+            <div class="card business-summary-card">
+                <div class="flex-between">
                     <div>
-                        <h3 style="margin: 0 0 0.5rem 0;">${escapeHtml(business.name)}</h3>
-                        <p class="text-secondary" style="margin: 0 0 0.5rem 0;">${escapeHtml(business.category)}</p>
-                        <p class="text-secondary" style="margin: 0; font-size: 0.9rem;">
+                        <h3 class="card-title">${escapeHtml(business.name)}</h3>
+                        <p class="text-secondary mb-sm">${escapeHtml(business.category)}</p>
+                        <p class="text-secondary text-sm">
                             ${escapeHtml(business.city)}, ${escapeHtml(business.state)}
                         </p>
                     </div>
-                    <div style="display: flex; gap: 0.5rem;">
+                    <div class="business-summary-actions">
                         <button class="btn btn-sm btn-primary" onclick="viewBusinessDetails()">View</button>
                         <button class="btn btn-sm btn-outline" onclick="editBusinessFromList()">Edit</button>
                     </div>
                 </div>
-                <div style="margin-top: 1rem; display: flex; align-items: center; gap: 1rem;">
+                <div class="mt-lg flex gap-lg">
                     ${renderStars(business.average_rating)}
                     <span class="text-secondary">${business.review_count} reviews</span>
                 </div>
@@ -612,15 +612,15 @@ async function saveDeal(event) {
     }
 
     const dealData = {
-        business_id: currentBusiness.id,
+        businessId: currentBusiness.id,
         title: document.getElementById('deal-title').value.trim(),
         description: document.getElementById('deal-description').value.trim(),
-        discount_amount: document.getElementById('deal-discount').value.trim(),
-        start_date: document.getElementById('deal-start').value,
-        end_date: document.getElementById('deal-end').value
+        discountAmount: document.getElementById('deal-discount').value.trim(),
+        startDate: document.getElementById('deal-start').value,
+        endDate: document.getElementById('deal-end').value
     };
 
-    if (!dealData.title || !dealData.description || !dealData.start_date || !dealData.end_date) {
+    if (!dealData.title || !dealData.description || !dealData.startDate || !dealData.endDate) {
         showDealError('Please fill in all required fields');
         return;
     }

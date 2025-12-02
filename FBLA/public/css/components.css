@@ -8,7 +8,7 @@
     border: none;
     border-radius: var(--border-radius-sm);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 240ms cubic-bezier(.2,.9,.2,1);
     text-decoration: none;
 }
 
@@ -20,11 +20,14 @@
 .btn-primary {
     background-color: var(--primary-color);
     color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .btn-primary:hover:not(:disabled) {
     background-color: var(--primary-hover);
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .btn-secondary {
@@ -44,8 +47,10 @@
 }
 
 .btn-outline:hover:not(:disabled) {
-    background-color: var(--primary-color);
-    color: white;
+    /* use a subtle tertiary background so text stays visible in light/dark */
+    background-color: var(--bg-tertiary);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .btn-sm {
@@ -67,13 +72,15 @@
 .card {
     background-color: var(--bg-primary);
     border-radius: var(--border-radius);
-    padding: var(--spacing-lg);
-    box-shadow: var(--shadow-sm);
-    transition: box-shadow 0.2s;
+    padding: var(--spacing-xl);
+    border: 1px solid rgba(232,228,222,0.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 240ms cubic-bezier(.2,.9,.2,1);
 }
 
 .card:hover {
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    transform: translateY(-4px);
 }
 
 .card-header {
@@ -101,12 +108,27 @@
 /* Business card specific */
 .business-card {
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 240ms cubic-bezier(.2,.9,.2,1), box-shadow 240ms cubic-bezier(.2,.9,.2,1);
 }
 
 .business-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.business-card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    margin: calc(var(--spacing-xl) * -1) calc(var(--spacing-xl) * -1) var(--spacing-lg) calc(var(--spacing-xl) * -1);
+}
+
+.business-detail-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-lg);
 }
 
 .business-card-category {
@@ -127,27 +149,27 @@
 }
 
 .alert-success {
-    background-color: #dcfce7;
-    border: 1px solid #86efac;
-    color: #166534;
+    background-color: rgba(126,168,140,0.15);
+    border: 1px solid rgba(126,168,140,0.3);
+    color: var(--success-color);
 }
 
 .alert-error {
-    background-color: #fee2e2;
-    border: 1px solid #fca5a5;
-    color: #991b1b;
+    background-color: rgba(201,122,107,0.15);
+    border: 1px solid rgba(201,122,107,0.3);
+    color: var(--error-color);
 }
 
 .alert-warning {
-    background-color: #fef3c7;
-    border: 1px solid #fde047;
-    color: #92400e;
+    background-color: rgba(212,165,116,0.15);
+    border: 1px solid rgba(212,165,116,0.3);
+    color: var(--warning-color);
 }
 
 .alert-info {
-    background-color: #dbeafe;
-    border: 1px solid #93c5fd;
-    color: #1e40af;
+    background-color: rgba(125,155,166,0.15);
+    border: 1px solid rgba(125,155,166,0.3);
+    color: var(--secondary-color);
 }
 
 /* Badge */
@@ -185,11 +207,13 @@
 
 .star {
     font-size: 20px;
-    color: #cbd5e1;
+    color: rgba(184,174,164,0.2);
+    transition: all 180ms cubic-bezier(.2,.9,.2,1);
 }
 
 .star.filled {
-    color: #fbbf24;
+    color: var(--primary-color);
+    text-shadow: 0 2px 8px rgba(212,149,108,0.3);
 }
 
 .star-rating-input {
@@ -200,14 +224,14 @@
 
 .star-rating-input .star {
     font-size: 32px;
-    transition: color 0.2s, transform 0.2s;
+    transition: color 180ms cubic-bezier(.2,.9,.2,1), transform 180ms cubic-bezier(.2,.9,.2,1);
     cursor: pointer;
 }
 
 .star-rating-input .star:hover,
 .star-rating-input .star.active {
-    color: #fbbf24;
-    transform: scale(1.1);
+    color: var(--primary-color);
+    transform: scale(1.2) rotate(15deg);
 }
 
 /* Loading spinner */
@@ -234,20 +258,17 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     z-index: 1000;
+    overflow-y: auto;
 }
 
 .modal {
     background-color: var(--bg-primary);
     border-radius: var(--border-radius);
     padding: var(--spacing-xl);
-    max-width: 600px;
+    max-width: 800px;
     width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
+    margin: 2rem auto;
     box-shadow: var(--shadow-lg);
 }
 
@@ -310,15 +331,16 @@
     align-items: center;
     gap: var(--spacing-sm);
     padding: 8px 12px;
-    background-color: #fef3c7;
-    border: 1px solid #fde047;
+    background-color: rgba(212,165,116,0.2);
+    border: 1px solid rgba(212,165,116,0.4);
     border-radius: var(--border-radius-sm);
     font-size: var(--font-size-sm);
     font-weight: 600;
-    color: #92400e;
+    color: var(--warning-color);
 }
 
 .deal-card {
+    border: 1px solid rgba(212,165,116,0.25);
     border-left: 4px solid var(--warning-color);
 }
 
@@ -333,4 +355,66 @@
     font-size: 48px;
     margin-bottom: var(--spacing-md);
     opacity: 0.5;
+}
+
+/* Cursor follower (subtle) */
+#cursor-follower {
+    position: fixed;
+    pointer-events: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(200,150,160,0.10);
+    transform: translate(-50%, -50%);
+    transition: width 200ms ease, height 200ms ease, background 200ms ease, opacity 160ms;
+    z-index: 9999;
+    mix-blend-mode: screen;
+    opacity: 0.9;
+}
+#cursor-follower.cursor-enlarge {
+    width: 36px;
+    height: 36px;
+    opacity: 0.75;
+}
+
+#cursor-follower.cursor-enlarge {
+    width: 34px;
+    height: 34px;
+    background: rgba(200,150,160,0.16);
+}
+
+/* link wrapper for info cards */
+.info-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Nav hover pill and theme-toggle glow (keeps nav styles local) */
+.nav-links a {
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: background-color 220ms cubic-bezier(.2,.9,.2,1), color 220ms, transform 220ms;
+}
+
+.nav-links a:hover {
+    background: var(--bg-tertiary);
+    color: var(--primary-color);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.nav .btn:hover {
+    box-shadow: 0 8px 22px rgba(16,12,8,0.06);
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* Ensure View All button text stays visible and has a crisp hover */
+#view-all-businesses {
+    color: white;
+}
+
+#view-all-businesses:hover {
+    color: white !important;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 28px rgba(16,12,8,0.08);
 }

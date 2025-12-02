@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/components.css">
     <link rel="stylesheet" href="/css/pages.css">
+        <link rel="stylesheet" href="/css/dark-theme.css">
+    <link rel="stylesheet" href="/css/overrides-dark-cleanup.css">
 </head>
 <body>
     <header class="header">
@@ -17,6 +19,7 @@
                 <li><a href="/businesses.html">Businesses</a></li>
                 <li><a href="/help.html">Help</a></li>
             </ul>
+                <!-- theme toggle removed; site uses dark theme only -->
         </nav>
     </header>
 
@@ -34,9 +37,41 @@
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 LocalReviews. All rights reserved.</p>
+        <div class="footer-nav container">
+            <div>
+                <a href="/" class="footer-brand">LocalReviews</a>
+                <p>Your number one reliable review cite.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-group">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/businesses.html">Browse Businesses</a></li>
+                        <li><a href="/help.html">Help Center</a></li>
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </div>
+                <div class="footer-group">
+                    <h4>Account</h4>
+                    <ul>
+                        <li><a href="/login.html">Login</a></li>
+                        <li><a href="/signup.html">Sign Up</a></li>
+                        <li><a href="/my-account.html">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-group">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:support@localreviews.com">support@localreviews.com</a></li> <!-- Example email -->
+                        <li><a href="tel:+1234567890">+1 (234) 567-890</a></li> <!-- Example phone number -->
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-legal">
+                <p>&copy; 2025 LocalReviews</p>
+            </div>
         </div>
     </footer>
 </body>
+        <script src="/js/utils.js"></script>
 </html>

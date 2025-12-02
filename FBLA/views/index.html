@@ -28,7 +28,7 @@
                 <div class="hero-search">
                     <form id="search-form" action="/businesses.html" method="GET">
                         <div class="search-input">
-                            <span class="search-icon">🔍</span>
+                            <span class="search-icon"> </span>
                             <input
                                 type="text"
                                 name="search"
@@ -38,32 +38,110 @@
                         </div>
                     </form>
                 </div>
+                <div class="hero-scroll mt-lg">
+                    <a href="#stats" class="btn btn-outline">Explore</a>
+                </div>
+                <div class="hero-arrow" aria-hidden="true">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
             </div>
         </section>
 
         <div class="container content-wrapper">
-            <section class="mb-xl">
-                <h2 class="section-title">Featured Businesses</h2>
-                <div id="featured-businesses" class="grid grid-cols-3">
-                    <!-- Businesses will be loaded here -->
-                </div>
-                <div class="text-center mt-lg">
-                    <a href="/businesses.html" class="btn btn-primary">View All Businesses</a>
+            <!-- Stats Section (simplified / removed big counters) -->
+                <section id="stats" class="stats-section reveal">
+                    <div class="stat-card" style="display:none;"> <!-- kept hidden for possible future use -->
+                    </div>
+                </section>
+
+            <section class="mb-xl reveal">
+                <div class="featured-section-container">
+                    <h2 class="section-title">Featured Businesses</h2>
+                    <div id="featured-businesses" class="grid grid-cols-3">
+                        <!-- Businesses will be loaded here -->
+                    </div>
+                    <div class="text-center mt-lg">
+                        <a href="/businesses.html" class="btn btn-primary" id="view-all-businesses">View All Businesses</a>
+                    </div>
                 </div>
             </section>
 
-            <section>
-                <h2 class="section-title">Active Deals</h2>
-                <div id="active-deals" class="deals-grid">
-                    <!-- Deals will be loaded here -->
+            <section class="mb-xl reveal">
+                <div class="deals-section-container">
+                    <h2 class="section-title">Active Deals</h2>
+                    <div id="active-deals" class="deals-grid">
+                        <!-- Deals will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Info Section -->
+            <section class="info-section mb-xl reveal">
+                <div class="info-section-container">
+                    <h2 class="section-title">How It Works</h2>
+                    <div class="info-grid info-vertical">
+                        <div class="info-row">
+                            <h3>Browse & Search</h3>
+                            <p>Search for local businesses by name, category, or location. Filter results to find exactly what you're looking for.</p>
+                            <a class="link-quiet" href="/businesses.html">Learn more</a>
+                        </div>
+                        <div class="info-row">
+                            <h3>Read Reviews</h3>
+                            <p>Check out detailed reviews and ratings from real customers. See what others think about local businesses.</p>
+                            <a class="link-quiet" href="/business-detail.html">See example</a>
+                        </div>
+                        <div class="info-row">
+                            <h3>Share Your Experience</h3>
+                            <p>Leave your own reviews and help other community members make informed decisions about local businesses.</p>
+                            <a class="link-quiet" href="/signup.html">Get started</a>
+                        </div>
+                        <div class="info-row">
+                            <h3>Find Great Deals</h3>
+                            <p>Discover exclusive deals and offers posted by local business owners. Save money while supporting local.</p>
+                            <a class="link-quiet" href="/deals.html">Browse deals</a>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 LocalReviews. All rights reserved.</p>
+        <div class="footer-nav container">
+            <div>
+                <a href="/" class="footer-brand">LocalReviews</a>
+                <p>Your number one reliable review cite.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-group">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/businesses.html">Browse Businesses</a></li>
+                        <li><a href="/help.html">Help Center</a></li>
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </div>
+                <div class="footer-group">
+                    <h4>Account</h4>
+                    <ul>
+                        <li><a href="/login.html">Login</a></li>
+                        <li><a href="/signup.html">Sign Up</a></li>
+                        <li><a href="/my-account.html">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-group">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:support@localreviews.com">support@localreviews.com</a></li> <!-- Example email -->
+                        <li><a href="tel:+1234567890">+1 (234) 567-890</a></li> <!-- Example phone number -->
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-legal">
+                <p>&copy; 2025 LocalReviews</p>
+            </div>
         </div>
     </footer>
 

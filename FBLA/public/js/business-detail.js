@@ -18,7 +18,7 @@ async function loadBusinessDetails() {
 
         const container = document.getElementById('business-header');
         container.innerHTML = `
-            ${business.image_url ? `<img src="${business.image_url}" alt="${business.name}" class="business-image" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem;">` : ''}
+            ${business.image_url ? `<img src="${business.image_url}" alt="${business.name}" class="business-detail-image">` : ''}
 
             <h1 class="business-title">${business.name}</h1>
             <span class="business-card-category">${business.category}</span>

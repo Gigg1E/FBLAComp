@@ -33,7 +33,7 @@ async function loadBusinesses() {
 
         container.innerHTML = data.businesses.map(business => `
             <div class="card business-card" onclick="window.location.href='/business-detail.html?id=${business.id}'">
-                ${business.image_url ? `<img src="${business.image_url}" alt="${business.name}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0; margin: -1rem -1rem 1rem -1rem;">` : ''}
+                ${business.image_url ? `<img src="${business.image_url}" alt="${business.name}" class="business-card-image">` : ''}
                 <span class="business-card-category">${business.category}</span>
                 <h3 class="card-title">${business.name}</h3>
                 <div class="flex gap-sm mb-sm">
@@ -122,12 +122,37 @@ async function loadCategories() {
 document.addEventListener('DOMContentLoaded', async () => {
     await initializePage();
     loadCategories();
-    loadBusinesses();
 
-    // Set up filter listeners with debounce
+    // Check for URL parameters and pre-fill filters
+    const urlParams = new URLSearchParams(window.location.search);
     const searchInput = document.getElementById('search');
     const categorySelect = document.getElementById('category');
     const cityInput = document.getElementById('city');
+
+    // Pre-fill search from URL parameter
+    if (urlParams.has('search')) {
+        const searchTerm = urlParams.get('search');
+        searchInput.value = searchTerm;
+        currentFilters.search = searchTerm;
+    }
+
+    // Pre-fill category from URL parameter
+    if (urlParams.has('category')) {
+        const category = urlParams.get('category');
+        categorySelect.value = category;
+        currentFilters.category = category;
+    }
+
+    // Pre-fill city from URL parameter
+    if (urlParams.has('city')) {
+        const city = urlParams.get('city');
+        cityInput.value = city;
+        currentFilters.city = city;
+    }
+
+    loadBusinesses();
+
+    // Set up filter listeners with debounce
 
     const debouncedSearch = debounce(() => {
         currentFilters.search = searchInput.value.trim();

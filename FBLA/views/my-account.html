@@ -8,12 +8,15 @@
     <link rel="stylesheet" href="/css/components.css">
     <link rel="stylesheet" href="/css/forms.css">
     <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/dark-theme.css">
+    <link rel="stylesheet" href="/css/overrides-dark-cleanup.css">
 </head>
 <body>
     <header class="header">
         <nav class="nav container">
             <a href="/" class="nav-brand">LocalReviews</a>
             <ul class="nav-links"></ul>
+            <!-- theme toggle removed; site uses dark theme only -->
         </nav>
     </header>
 
@@ -55,8 +58,8 @@
                 <div id="businesses-list"></div>
                 
                 <!-- Business form modal (create/edit) -->
-                <div id="business-form-modal" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; overflow-y: auto;">
-                    <div style="background: white; max-width: 800px; margin: 2rem auto; padding: 2rem; border-radius: 8px;">
+                <div id="business-form-modal" class="modal-overlay" style="display:none;">
+                    <div class="modal">
                         <h2 id="business-form-title">Add Business</h2>
                         <div id="form-errors" class="alert alert-error" style="display:none;"></div>
                         <div id="form-success" class="alert alert-success" style="display:none;"></div>
@@ -216,8 +219,39 @@
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 LocalReviews. All rights reserved.</p>
+        <div class="footer-nav container">
+            <div>
+                <a href="/" class="footer-brand">LocalReviews</a>
+                <p>Your number one reliable review cite.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-group">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/businesses.html">Browse Businesses</a></li>
+                        <li><a href="/help.html">Help Center</a></li>
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </div>
+                <div class="footer-group">
+                    <h4>Account</h4>
+                    <ul>
+                        <li><a href="/login.html">Login</a></li>
+                        <li><a href="/signup.html">Sign Up</a></li>
+                        <li><a href="/my-account.html">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-group">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:support@localreviews.com">support@localreviews.com</a></li> <!-- Example email -->
+                        <li><a href="tel:+1234567890">+1 (234) 567-890</a></li> <!-- Example phone number -->
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-legal">
+                <p>&copy; 2025 LocalReviews</p>
+            </div>
         </div>
     </footer>
 
