@@ -33,24 +33,24 @@ async function loadBusinessDetails() {
 
             <div class="business-info">
                 <div class="business-info-item">
-                    <span>📍</span>
+                    <span>🎯</span>
                     <span>${business.address}, ${business.city}, ${business.state} ${business.zip_code}</span>
                 </div>
                 ${business.phone ? `
                     <div class="business-info-item">
-                        <span>📞</span>
+                        <span>☎️</span>
                         <span>${business.phone}</span>
                     </div>
                 ` : ''}
                 ${business.email ? `
                     <div class="business-info-item">
-                        <span>📧</span>
+                        <span>@</span>
                         <a href="mailto:${business.email}">${business.email}</a>
                     </div>
                 ` : ''}
                 ${business.website ? `
                     <div class="business-info-item">
-                        <span>🌐</span>
+                        <span>🌎</span>
                         <a href="${business.website}" target="_blank">${business.website}</a>
                     </div>
                 ` : ''}
