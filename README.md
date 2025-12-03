@@ -1,5 +1,5 @@
 # Local Website Review README.md File
-
+See full post at https://github.com/Gigg1E/FBLAComp/tree/main
 ### Some know abouts
 - **Frontend:** HTML5, CSS3, Vanilla Javascript
 - **Backend:** Node.js with Express.js
