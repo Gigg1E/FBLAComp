@@ -121,20 +121,6 @@
     100% { transform: translate(-50%, 0) scale(1); }
 }
 
-/* Small animated sheen on header to add subtle life */
-.header::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, rgba(212,149,108,0.1), rgba(212,149,108,0.2), rgba(212,149,108,0.1));
-    transform: translateX(-100%);
-    animation: headerShine 8s linear infinite;
-    pointer-events: none;
-    opacity: 0.7;
-}
 
 @keyframes headerShine {
     0% { transform: translateX(-100%); }

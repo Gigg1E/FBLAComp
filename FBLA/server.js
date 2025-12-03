@@ -11,12 +11,14 @@ const path = require('path');
 // Import database functions
 // Make sure this path is correct: server.js and config/ are in the same folder
 const { initializeDatabase, cleanupExpiredSessions } = require('./config/database');
+const { execFileSync } = require('child_process');
 
 // Import route modules
 const authRoutes = require('./routes/auth');
 const businessRoutes = require('./routes/businesses');
 const reviewRoutes = require('./routes/reviews');
 const dealRoutes = require('./routes/deals');
+const bookmarkRoutes = require('./routes/bookmarks');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -56,9 +58,17 @@ app.use('/api/reviews', reviewRoutes);
 // Deal routes
 app.use('/api/deals', dealRoutes);
 
+// Bookmark routes
+app.use('/api/bookmarks', bookmarkRoutes);
+
 // Root route - serve homepage
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
+});
+
+// Favicon route - prevent 404 error
+app.get('/favicon.ico', (req, res) => {
+    res.status(204).end(); // No content
 });
 
 // ====================
@@ -106,6 +116,14 @@ async function startServer() {
     try {
         // Initialize database tables if not exist
         await initializeDatabase();
+        // Run any lightweight migrations (add missing columns) synchronously
+        try {
+            const migPath = path.join(__dirname, 'scripts', 'add-products-column.js');
+            execFileSync('node', [migPath], { stdio: 'inherit' });
+            console.log('Migrations ran successfully');
+        } catch (err) {
+            console.error('Migration script error (non-fatal):', err.message || err);
+        }
         console.log('Database initialized');
 
         // Clean up expired sessions on startup

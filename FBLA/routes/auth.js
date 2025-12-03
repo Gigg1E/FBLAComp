@@ -3,13 +3,26 @@ const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const { runQuery, getOne } = require('../config/database');
 const { requireAuth } = require('../middleware/auth');
+const { generateCaptcha, requireCaptcha } = require('../middleware/captcha');
 
 const router = express.Router();
 const SALT_ROUNDS = 10;
 const SESSION_DURATION_DAYS = 7;
 
-// Signup endpoint
-router.post('/signup', async (req, res) => {
+
+// Generate captcha for signup (no auth required)
+router.get('/captcha/generate', (req, res) => {
+    try {
+        const captcha = generateCaptcha();
+        res.json(captcha);
+    } catch (err) {
+        console.error('Error generating captcha:', err);
+        res.status(500).json({ error: 'Failed to generate captcha' });
+    }
+});
+
+// Signup endpoint (no auth required, but captcha is required)
+router.post('/signup', requireCaptcha, async (req, res) => {
     try {
         const { email, username, password, role } = req.body;
 

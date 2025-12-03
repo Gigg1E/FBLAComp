@@ -55,6 +55,9 @@ async function initializeAccountPage() {
     // Load user's reviews
     loadMyReviews();
 
+    // Load bookmarked businesses
+    loadBookmarkedBusinesses();
+
     // Only show business/deals tabs for business owners and admins
     if (currentUser.user && (currentUser.user.role === 'business_owner' || currentUser.user.role === 'admin')) {
         document.getElementById('businesses-tab-btn').style.display = 'block';
@@ -102,6 +105,8 @@ function switchTab(tabName) {
         loadMyBusinessesList();
     } else if (tabName === 'deals' && currentBusiness) {
         loadMyDeals();
+    } else if (tabName === 'bookmarks') {
+        loadBookmarkedBusinesses();
     }
 }
 
@@ -734,6 +739,69 @@ function setupEventListeners() {
     const businessImageInput = document.getElementById('business-image');
     if (businessImageInput) {
         businessImageInput.addEventListener('change', handleFileSelect);
+    }
+}
+
+// Load bookmarked businesses
+async function loadBookmarkedBusinesses() {
+    try {
+        const data = await apiCall('/api/bookmarks/my/bookmarks');
+        const bookmarksDiv = document.getElementById('bookmarked-businesses');
+
+        if (!data.bookmarks || data.bookmarks.length === 0) {
+            bookmarksDiv.innerHTML = '<div class="empty-state"><p>You haven\'t bookmarked any businesses yet</p></div>';
+            return;
+        }
+
+        bookmarksDiv.innerHTML = data.bookmarks.map(business => `
+            <div class="card business-summary-card mb-lg">
+                <div class="flex-between">
+                    <div style="flex: 1;">
+                        <h3 class="card-title">${escapeHtml(business.name)}</h3>
+                        <p class="text-secondary mb-sm">${escapeHtml(business.category)}</p>
+                        <p class="text-secondary text-sm">
+                            ${escapeHtml(business.city)}, ${escapeHtml(business.state)}
+                        </p>
+                        ${business.description ? `<p class="mt-sm">${escapeHtml(business.description.substring(0, 150))}${business.description.length > 150 ? '...' : ''}</p>` : ''}
+                    </div>
+                    <div class="business-summary-actions">
+                        <button class="btn btn-sm btn-primary" onclick="viewBookmarkedBusiness(${business.id})">View</button>
+                        <button class="btn btn-sm btn-secondary" onclick="removeBookmark(${business.id})">Remove</button>
+                    </div>
+                </div>
+                <div class="mt-lg flex gap-lg">
+                    ${renderStars(business.average_rating)}
+                    <span class="text-secondary">${business.review_count} reviews</span>
+                </div>
+                <p class="text-sm text-secondary mt-sm">Bookmarked on ${formatDate(business.bookmarked_at)}</p>
+            </div>
+        `).join('');
+    } catch (err) {
+        console.error('Error loading bookmarked businesses:', err);
+        showError('bookmarked-businesses', 'Failed to load bookmarked businesses');
+    }
+}
+
+// View bookmarked business
+function viewBookmarkedBusiness(businessId) {
+    window.location.href = `/business-detail.html?id=${businessId}`;
+}
+
+// Remove bookmark from my-account page
+async function removeBookmark(businessId) {
+    if (!confirm('Remove this bookmark?')) {
+        return;
+    }
+
+    try {
+        await apiCall(`/api/bookmarks/${businessId}`, { method: 'DELETE' });
+        showAlert('Bookmark removed successfully', 'success');
+
+        // Reload bookmarks
+        await loadBookmarkedBusinesses();
+    } catch (err) {
+        console.error('Error removing bookmark:', err);
+        showAlert(err.message || 'Failed to remove bookmark', 'error');
     }
 }
 

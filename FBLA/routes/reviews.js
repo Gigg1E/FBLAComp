@@ -5,7 +5,7 @@ const { generateCaptcha, requireCaptcha } = require('../middleware/captcha');
 
 const router = express.Router();
 
-// Generate captcha for review submission
+// Generate captcha for review submission (auth required since it's for reviews)
 router.get('/captcha/generate', requireAuth, (req, res) => {
     try {
         const captcha = generateCaptcha();

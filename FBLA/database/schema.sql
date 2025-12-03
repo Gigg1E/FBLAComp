@@ -70,6 +70,17 @@ CREATE TABLE IF NOT EXISTS sessions (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- Bookmarks Table
+CREATE TABLE IF NOT EXISTS bookmarks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    business_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (business_id) REFERENCES businesses(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(business_id, user_id)
+);
+
 -- Indexes for better query performance
 CREATE INDEX IF NOT EXISTS idx_reviews_business ON reviews(business_id);
 CREATE INDEX IF NOT EXISTS idx_reviews_user ON reviews(user_id);
@@ -78,6 +89,8 @@ CREATE INDEX IF NOT EXISTS idx_businesses_city ON businesses(city);
 CREATE INDEX IF NOT EXISTS idx_deals_business ON deals(business_id);
 CREATE INDEX IF NOT EXISTS idx_deals_active ON deals(active, end_date);
 CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at);
+CREATE INDEX IF NOT EXISTS idx_bookmarks_business ON bookmarks(business_id);
+CREATE INDEX IF NOT EXISTS idx_bookmarks_user ON bookmarks(user_id);
 
 -- View for business statistics
 CREATE VIEW IF NOT EXISTS business_stats AS

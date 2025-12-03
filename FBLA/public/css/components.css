@@ -107,6 +107,7 @@
 
 /* Business card specific */
 .business-card {
+    position: relative;
     cursor: pointer;
     transition: transform 240ms cubic-bezier(.2,.9,.2,1), box-shadow 240ms cubic-bezier(.2,.9,.2,1);
 }
@@ -141,11 +142,73 @@
     margin-bottom: var(--spacing-sm);
 }
 
+/* Bookmark button on business cards */
+.bookmark-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 240ms cubic-bezier(.2,.9,.2,1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.bookmark-btn:hover {
+    background-color: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.bookmark-btn.bookmarked {
+    color: #f59e0b;
+}
+
+/* Toast container for notifications */
+#toast-container {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    pointer-events: none;
+}
+
 /* Alert/Message boxes */
 .alert {
     padding: var(--spacing-md);
     border-radius: var(--border-radius-sm);
     margin-bottom: var(--spacing-md);
+}
+
+/* Toast notification styling */
+.alert-toast {
+    pointer-events: auto;
+    min-width: 300px;
+    max-width: 500px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.alert-toast.alert-show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .alert-success {

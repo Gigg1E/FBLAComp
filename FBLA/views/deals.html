@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browse Businesses - LocalReviews</title>
+    <title>Deals - LocalReviews</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/components.css">
-    <link rel="stylesheet" href="/css/forms.css">
     <link rel="stylesheet" href="/css/pages.css">
     <link rel="stylesheet" href="/css/overrides-dark-cleanup.css">
 </head>
@@ -15,46 +14,26 @@
         <nav class="nav container">
             <a href="/" class="nav-brand">LocalReviews</a>
             <ul class="nav-links"></ul>
-            <!-- theme toggle removed; site uses dark theme only -->
         </nav>
     </header>
 
     <main class="content-wrapper">
         <div class="container">
-            <h1>Browse Businesses</h1>
+            <h1>Active Deals</h1>
 
-            <div class="filters-bar">
-                <div class="filter-group">
-                    <label for="search" class="form-label">Search</label>
-                    <input
-                        type="text"
-                        id="search"
-                        class="form-input"
-                        placeholder="Search businesses..."
-                    >
-                </div>
+           <!-- makes sure that only business owners can create deals. also helps with check system.
+            <div class="mb-md">
+                <a href="/post-deal.html" class="btn btn-outline">Post a Deal</a>
+            </div>
+            -->
 
-                <div class="filter-group">
-                    <label for="category" class="form-label">Category</label>
-                    <select id="category" class="form-select">
-                        <option value="">All Categories</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label for="city" class="form-label">City</label>
-                    <input
-                        type="text"
-                        id="city"
-                        class="form-input"
-                        placeholder="Filter by city..."
-                    >
-                </div>
+            <div id="deals-container" class="grid grid-cols-3">
+                <!-- Deals will be loaded here -->
             </div>
 
-            <div id="businesses-container" class="grid grid-cols-3"></div>
-
-            <div id="pagination" class="pagination"></div>
+            <div id="no-deals" class="empty-state" style="display:none;">
+                <p>No active deals available right now.</p>
+            </div>
         </div>
     </main>
 
@@ -84,8 +63,8 @@
                 <div class="footer-group">
                     <h4>Contact</h4>
                     <ul>
-                        <li><a href="mailto:support@localreviews.com">support@localreviews.com</a></li> <!-- Example email -->
-                        <li><a href="tel:+1234567890">+1 (234) 567-890</a></li> <!-- Example phone number -->
+                        <li><a href="mailto:support@localreviews.com">support@localreviews.com</a></li>
+                        <li><a href="tel:+1234567890">+1 (234) 567-890</a></li>
                     </ul>
                 </div>
             </div>
@@ -96,6 +75,6 @@
     </footer>
 
     <script src="/js/utils.js"></script>
-    <script src="/js/business-list.js"></script>
+    <script src="/js/deals-list.js"></script>
 </body>
 </html>

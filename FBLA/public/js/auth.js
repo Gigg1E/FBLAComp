@@ -1,5 +1,6 @@
 // Login form handling
-document.addEventListener('DOMContentLoaded', () => {
+let captchaId = null;
+document.addEventListener('DOMContentLoaded', async () => {
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
 
@@ -10,7 +11,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (signupForm) {
         signupForm.addEventListener('submit', handleSignup);
     }
+
+    await loadCaptcha();
 });
+
+// Load captcha
+async function loadCaptcha() {
+    try {
+        const data = await apiCall('/api/auth/captcha/generate');
+        captchaId = data.captchaId;
+        document.getElementById('captcha-question').textContent = data.question;
+    } catch (err) {
+        console.error('Error loading captcha:', err);
+        showAlert('Failed to load captcha', 'error');
+    }
+}
 
 async function handleLogin(e) {
     e.preventDefault();
@@ -60,6 +75,7 @@ async function handleSignup(e) {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     const role = document.getElementById('role').value;
+    const captchaAnswer = document.getElementById('captcha-answer').value;
 
     // Clear previous errors
     hideErrors();
@@ -85,13 +101,20 @@ async function handleSignup(e) {
         return;
     }
 
+    if (!captchaAnswer) {
+        showError('captcha-error', 'Please answer the captcha');
+        return;
+    }
+
     // Submit
     try {
         showLoading();
 
         const response = await apiCall('/api/auth/signup', {
             method: 'POST',
-            body: JSON.stringify({ email, username, password, role })
+            body: JSON.stringify({ email, username, password, role }),
+            captchaId,
+            captchaAnswer
         });
 
         hideLoading();
@@ -102,7 +125,16 @@ async function handleSignup(e) {
     } catch (err) {
         hideLoading();
         showError('error-message', err.message || 'Signup failed. Please try again.');
+        // If captcha failed, reload it
+        if (err.message.includes('Captcha') || err.message.includes('captcha')) {
+            await loadCaptcha();
+            document.getElementById('captcha-answer').value = '';
+            showError('captcha-error', err.message);
+        } else {
+            showAlert(err.message || 'Failed to submit review', 'error');
+        }
     }
+
 }
 
 function showError(elementId, message) {

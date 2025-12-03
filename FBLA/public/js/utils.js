@@ -32,18 +32,34 @@ async function getCurrentUser() {
     }
 }
 
-// Show alert message
+// Show alert message as a toast notification at bottom-center
 function showAlert(message, type = 'info') {
     const alertDiv = document.createElement('div');
-    alertDiv.className = `alert alert-${type}`;
+    alertDiv.className = `alert alert-${type} alert-toast`;
     alertDiv.textContent = message;
 
-    const container = document.querySelector('.container') || document.body;
-    container.insertBefore(alertDiv, container.firstChild);
+    // Create a toast container if it doesn't exist
+    let toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toast-container';
+        document.body.appendChild(toastContainer);
+    }
 
+    toastContainer.appendChild(alertDiv);
+
+    // Add animation class after a tiny delay to trigger CSS transition
     setTimeout(() => {
-        alertDiv.remove();
-    }, 5000);
+        alertDiv.classList.add('alert-show');
+    }, 10);
+
+    // Remove after 3 seconds with fade-out animation
+    setTimeout(() => {
+        alertDiv.classList.remove('alert-show');
+        setTimeout(() => {
+            alertDiv.remove();
+        }, 300); // match CSS transition duration
+    }, 3000);
 }
 
 // Show loading spinner
@@ -153,6 +169,7 @@ async function updateNavigation() {
         navLinks.innerHTML = `
             <li><a href="/">Home</a></li>
             <li><a href="/businesses.html">Businesses</a></li>
+            <li><a href="/deals.html">Deals</a></li>
             <li><a href="/my-account.html">Account</a></li>
             <li><a href="/help.html">Help</a></li>
             <li><a href="#" id="logout-btn">Logout</a></li>
@@ -166,6 +183,7 @@ async function updateNavigation() {
         navLinks.innerHTML = `
             <li><a href="/">Home</a></li>
             <li><a href="/businesses.html">Businesses</a></li>
+            <li><a href="/deals.html">Deals</a></li>
             <li><a href="/help.html">Help</a></li>
             <li><a href="/login.html">Login</a></li>
             <li><a href="/signup.html">Sign Up</a></li>
