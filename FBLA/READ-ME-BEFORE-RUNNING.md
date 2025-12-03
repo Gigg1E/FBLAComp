@@ -1,310 +1,122 @@
-# Local Business Reviews Website
+# Local Website Review README.md File
 
-A full-stack web application for reviewing and finding local businesses. Users can browse businesses, write reviews with star ratings, and discover deals. Business owners can post promotional deals for their businesses.
+### Some know abouts
+- **Frontend:** HTML5, CSS3, Vanilla Javascript
+- **Backend:** Node.js with Express.js
+- **Database:** SQLite
+- **Auth:** Bcrypt password hashing, HTTP-only cookies
+- **Security:** Simple math captcha for spam prevention
+---
+**How to run - The Basic Steps**
 
-## Features
+Please read **Before Running**
 
-- **User Authentication**: Secure signup and login system with session-based authentication
-- **Business Browsing**: Search and filter local businesses by name, category, and city
-- **Review System**: Write detailed reviews with 1-5 star ratings (protected by captcha)
-- **Deals**: Business owners can post time-limited deals and promotions
-- **User Accounts**: View and manage your reviews from your account page
-- **Help Center**: Comprehensive how-to guides and FAQs
+There is a file named **RUN-THIS.bat**. This script will setup the needed packages on your computer to be able to run the server and host the website.
+This is the basic way to setup your computer to host, but there are some steps you need to take to make sure that the script starts correctly.
 
-## Technology Stack
 
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Backend**: Node.js with Express.js
-- **Database**: SQLite
-- **Authentication**: bcrypt password hashing, HTTP-only cookies
-- **Security**: Custom math captcha for spam prevention
+### **Before Running**
+1. Ensure your computer has scripts turned on.
+   
+To do this open settings and in the search bar type _script_.
+You should see something that says "_Allow local powershell scripts to run without being signed_".
+This needs to be enabled to run the server and to install the needed packages
 
-## Project Structure
+2. With scripts enabled you should now be able to run **RUN-THIS.bat** without any issues.
 
+<br>
+
+## If (Issues == True) {Do below}
+If you come across any issues while trying to set up the server for hosting here are some steps to ensure you can overcome it.
+
+Identify the point of failure. 
+- Did you enable scripts? 
+- Did it not install Node.js and/or NPM?
+- Port Error
+- Did you double click the file to run?
+
+  
+Depending on the issue, you can follow the steps below.
+
+### 📄 Enable Scripts 
+To do this open settings and in the search bar type _script_.
+You should see something that says "_Allow local powershell scripts to run without being signed_".
+
+This needs to be enabled to run the server and to install the needed packages
+
+2. With scripts enabled you should now be able to run **RUN-THIS.bat** without any issues.
+
+---
+
+### 📩 Failed Node.js and/or NPM install 
+This can be caused by scripts being disabled so please see **Enable Scripts** and make sure it's on.
+
+To fix the install of Node.js and NPM you can manually install.
+1. Navigate to the install website => https://nodejs.org/en/download
+2. Select the version v24.11.1 for Windows. Other option should be left default (using _Docker_ with _NPM_)
+3. Download the executable and run it once its installed (It will show a install wizard, just click next for all options till install, then click install)
+4. Select allow changes when prompted
+
+With these steps you should be able to see the server and it should start.
+
+---
+
+### ⚓ Change Port
+The website is hosted on port 3000. You might find a port error. If so, follow these steps.
+1. Inside the folder with the script called **server.js** (same as the one with this README.md file), find a blank area to right click with your mouse.
+2. Click on "_open in terminal_"
+3. Type the following into the terminal (submitting after each one):
+```Bash
+tasklist
+taskkill /f /im node.exe
+taskkill /pid 3000 /f
 ```
-FBLA/
-├── config/
-│   └── database.js           # Database configuration and helpers
-├── database/
-│   ├── schema.sql            # Database schema
-│   ├── seed.sql              # Sample data
-│   └── reviews.db            # SQLite database (auto-generated)
-├── middleware/
-│   ├── auth.js               # Authentication middleware
-│   └── captcha.js            # Captcha generation and validation
-├── routes/
-│   ├── auth.js               # Authentication endpoints
-│   ├── businesses.js         # Business CRUD operations
-│   ├── reviews.js            # Review management with captcha
-│   └── deals.js              # Deal posting and retrieval
-├── public/
-│   ├── css/                  # Stylesheets
-│   └── js/                   # Client-side JavaScript
-├── views/                    # HTML pages
-├── scripts/                  # Utility scripts
-├── server.js                 # Main application entry point
-└── package.json              # Dependencies
-```
+NOTE: These can be case sysitive. If it fails and it says "Unknown command (or something similar)" try capitalizing terms like 'PID', 'IM', and/or 'F'.
 
-## Installation
+<br>
 
-### Prerequisites
+## Other
+Here are some other things to know.
 
-- Node.js (v14 or higher)
-- npm (comes with Node.js)
+### Manually Start the Server
+If you have successfully started the server by using the script, you don't have to use it every time to start the server.
 
-### Setup Steps
-
-1. **Install dependencies**
-   
-   ```bash
-   npm install
-   ```
-
-2. **Initialize the database**
-   
-   ```bash
-   npm run init-db
-   ```
-
-3. **Start the server**
-   
-   ```bash
-   npm start
-   ```
-
-4. **Access the application**
-   Open your browser and navigate to:
-   
-   ```
-   http://localhost:3000
-   ```
-
-## Usage
-
-### For Regular Users
-
-1. **Create an Account**
-   
-   - Click "Sign Up" in the navigation
-   - Fill in your email, username, and password
-   - Select "Regular User" as account type
-   - Submit the form
-
-2. **Browse Businesses**
-   
-   - Click "Businesses" to view all businesses
-   - Use the search bar to find specific businesses
-   - Filter by category or city
-   - Click on any business to view details
-
-3. **Write a Review**
-   
-   - Navigate to a business detail page
-   - Click "Write a Review" (must be logged in)
-   - Select a star rating (1-5)
-   - Enter a title and review text (minimum 20 characters)
-   - Complete the math captcha
-   - Submit your review
-
-4. **View Your Reviews**
-   
-   - Click "Account" to see your profile
-   - All your reviews are listed with links to businesses
-
-### For Business Owners
-
-1. **Create a Business Owner Account**
-   
-   - Sign up and select "Business Owner" as account type
-
-2. **Post Deals**
-   
-   - After logging in, click "Post Deal"
-   - Select your business from the dropdown
-   - Enter deal details (title, description, discount amount)
-   - Set start and end dates
-   - Submit the deal
-
-**Note**: To add a business to the system, contact an administrator or use the API endpoint (admin access required).
-
-## API Endpoints
-
-### Authentication
-
-- `POST /api/auth/signup` - Create new user account
-- `POST /api/auth/login` - Login user
-- `POST /api/auth/logout` - Logout user
-- `GET /api/auth/me` - Get current user info
-
-### Businesses
-
-- `GET /api/businesses` - Get all businesses (with filters)
-- `GET /api/businesses/:id` - Get single business
-- `GET /api/businesses/:id/stats` - Get business statistics
-- `POST /api/businesses` - Create business (admin only)
-
-### Reviews
-
-- `GET /api/reviews/business/:id` - Get reviews for a business
-- `POST /api/reviews` - Create review (requires auth + captcha)
-- `PUT /api/reviews/:id` - Update own review
-- `DELETE /api/reviews/:id` - Delete own review
-
-### Deals
-
-- `GET /api/deals` - Get all active deals
-- `GET /api/deals/business/:id` - Get deals for a business
-- `POST /api/deals` - Create deal (business owner only)
-- `PUT /api/deals/:id` - Update deal
-- `DELETE /api/deals/:id` - Delete deal
-
-### Captcha
-
-- `GET /api/reviews/captcha/generate` - Generate math captcha
-- Captcha is validated automatically on review submission
-
-## Database Schema
-
-### Users Table
-
-- id, email, password_hash, username, role (user/business_owner/admin)
-
-### Businesses Table
-
-- id, name, category, address, city, state, zip_code, phone, email, website, description, owner_id
-
-### Reviews Table
-
-- id, business_id, user_id, rating (1-5), title, review_text
-- Unique constraint: one review per user per business
-
-### Deals Table
-
-- id, business_id, title, description, discount_amount, start_date, end_date, active
-
-### Sessions Table
-
-- id, user_id, expires_at
-
-## Security Features
-
-- **Password Security**: Passwords hashed with bcrypt (10 rounds)
-- **Session Management**: HTTP-only cookies, 7-day expiration
-- **SQL Injection Prevention**: Parameterized queries
-- **Captcha Protection**: Simple math captcha prevents spam reviews
-- **One Review Per Business**: Database constraint prevents duplicate reviews
-- **Role-Based Access**: Middleware enforces business owner and admin permissions
-
-## Configuration
-
-### Port Configuration
-
-The server runs on port 3000 by default. To change this, set the `PORT` environment variable:
-
-```bash
-PORT=8080 npm start
-```
-
-### Session Duration
-
-Sessions expire after 7 days. To modify this, edit `SESSION_DURATION_DAYS` in `routes/auth.js`.
-
-### Captcha Expiration
-
-Captchas expire after 5 minutes. To modify this, edit `CAPTCHA_EXPIRATION` in `middleware/captcha.js`.
-
-## Sample Data
-
-The seed file includes:
-
-- 5 sample users (all with password: `password123`)
-- 8 sample businesses across various categories
-- 8 sample reviews
-- 4 sample active deals
-
-To reset the database with sample data:
-
-```bash
+You can follow these steps to start it yourself:
+1. Inside the folder with the script called **server.js** (also in the same folder as this README.md), find a blank area to right click with your mouse.
+2. Click on "_open in terminal_"
+3. Type the following into the terminal (submitting after each one):
+```Bash
+npm install
 npm run init-db
+npm start
 ```
+<br>
 
-## Development
-
-### Running in Development Mode
-
-```bash
-npm run dev
-```
-
-### Adding New Routes
-
-1. Create a new route file in `routes/`
-2. Import and mount it in `server.js`
-
-### Adding New Pages
-
-1. Create HTML file in `views/`
-2. Create corresponding JavaScript in `public/js/`
-3. Link CSS files as needed
-
-## Troubleshooting
-
-### Database Issues
-
-If you encounter database errors:
-
-```bash
-# Delete the database file
-rm database/reviews.db
-
-# Reinitialize
-npm run init-db
-```
-
-### Port Already in Use
-
-If port 3000 is already in use:
-
-```bash
-PORT=3001 npm start
-```
-
-### Module Not Found Errors
-
-Reinstall dependencies:
-
-```bash
-rm -rf node_modules
+### Breakdown of Bash
+When you manually start the server you use NPM commands to do this. I'll explain what each does briefly.
+1. This reads the file named _packages.json_ and installs the dependencies that the website needs to run correctly
+```Bash
 npm install
 ```
+2. This initializes the database
+```Bash
+npm run init-db
+```
+3. This starts the server and opens the website to your browser
+```Bash
+npm start
+```
+<br>
 
-## Future Enhancements
+### Hosting
+The website is hosted on port 3000. You might find a port error. If so, follow these steps.
+1. Inside the folder with the script called **server.js** (same as the one with this README.md file), find a blank area to right click with your mouse.
+2. Click on "_open in terminal_"
+3. Type the following into the terminal (submitting after each one):
+```Bash
+tasklist
+taskkill /f /im node.exe
+taskkill /pid 3000 /f
+```
+NOTE: These can be case sysitive. If failed and it says "Unknown command (or something simular)" try capitalizing terms like 'PID', 'IM', and/or 'F'.
 
-Potential features for future versions:
-
-- Image uploads for businesses and reviews
-- Email verification for new accounts
-- Password reset functionality
-- Business claim/verification process
-- Advanced search with multiple filters
-- User profile pictures
-- Review voting (helpful/not helpful)
-- Business categories with icons
-- Map integration for business locations
-
-## License
-
-MIT License - feel free to use this project for learning or commercial purposes.
-
-## Support
-
-For questions or issues:
-
-- Check the Help page within the application
-- Review this README
-- Contact: support@localreviews.com
-
-## Credits
-
-Built for FBLA Web Development Competition 2025
