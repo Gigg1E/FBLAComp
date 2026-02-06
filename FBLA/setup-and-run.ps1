@@ -2,7 +2,7 @@
 # Local Business Reviews - Setup and Run Script (PowerShell)
 # ============================================
 # This PowerShell script will:
-# 1. Check for Node.js and npm installation
+# 1. Check for Node.js installation
 # 2. Install dependencies
 # 3. Initialize the database
 # 4. Start the server
@@ -70,28 +70,6 @@ try {
     exit 1
 }
 
-Write-Host ""
-
-# ============================================
-# STEP 2: Check for npm
-# ============================================
-Write-Host "[2/6] Checking for npm..." -ForegroundColor Yellow
-
-try {
-    $npmVersion = npm --version 2>&1
-    if ($LASTEXITCODE -ne 0) {
-        throw "npm command failed"
-    }
-    Write-Host "npm is installed: $npmVersion" -ForegroundColor Green
-} catch {
-    Write-Host ""
-    Write-Host "ERROR: npm is not installed!" -ForegroundColor Red
-    Write-Host ""
-    Write-Host "npm usually comes with Node.js. Please reinstall Node.js." -ForegroundColor Yellow
-    Write-Host ""
-    Read-Host "Press Enter to exit"
-    exit 1
-}
 
 Write-Host ""
 

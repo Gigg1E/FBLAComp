@@ -1,6 +1,20 @@
 let businessId = null;
 let currentReviewPage = 1;
 
+
+//To show Product listing past this after business-description
+
+/*
+${business.products ? `
+                <div class="mt-lg">
+                    <h3 class="mb-sm">Products & Services</h3>
+                    <p class="text-secondary">${business.products}</p>
+                </div>
+            ` : ''}
+*/
+//This is not fully functional yet because it does not have the right formating when displayed.
+
+
 // Load business details
 async function loadBusinessDetails() {
     try {
