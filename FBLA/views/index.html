@@ -92,12 +92,12 @@
                         <div class="info-row">
                             <h3>Read Reviews</h3>
                             <p>Check out detailed reviews and ratings from real customers. See what others think about local businesses.</p>
-                            <a class="link-quiet" href="/business-detail.html">See example</a>
+                            <a class="link-quiet" href="/businesses.html">See example</a>
                         </div>
                         <div class="info-row">
                             <h3>Share Your Experience</h3>
                             <p>Leave your own reviews and help other community members make informed decisions about local businesses.</p>
-                            <a class="link-quiet" href="/signup.html">Get started</a>
+                            <a class="link-quiet" href="/businesses.html">Get started</a>
                         </div>
                         <div class="info-row">
                             <h3>Find Great Deals</h3>
@@ -210,6 +210,12 @@
             await initializePage();
             loadFeaturedBusinesses();
             loadActiveDeals();
+
+            // Update "Share Your Experience" link based on auth status
+            const shareLink = document.getElementById('share-experience-link');
+            if (shareLink && isAuthenticated()) {
+                shareLink.href = '/businesses.html';
+            }
         });
     </script>
 </body>
