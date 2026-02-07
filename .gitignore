@@ -24,6 +24,3 @@ Thumbs.db
 tmp/
 temp/
 
-# Uploaded files
-public/uploads/businesses/*
-!public/uploads/businesses/.gitkeep
