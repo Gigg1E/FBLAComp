@@ -38,7 +38,7 @@ See full post at https://github.com/Gigg1E/FBLAComp/tree/main
 
 * Sample Account 5:
   
-  * Email: Guest5Gguest.com - Business Account
+  * Email: Guest5@Gguest.com - Business Account
   * Username: Guest5
   * Password: guest5guest
 
