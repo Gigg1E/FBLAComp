@@ -1,5 +1,20 @@
 let businessId = null;
 let currentReviewPage = 1;
+let userBookmarks = new Set();
+
+
+//To show Product listing past this after business-description
+
+/*
+${business.products ? `
+                <div class="mt-lg">
+                    <h3 class="mb-sm">Products & Services</h3>
+                    <p class="text-secondary">${business.products}</p>
+                </div>
+            ` : ''}
+*/
+//This is not fully functional yet because it does not have the right formating when displayed.
+
 
 // Load business details
 async function loadBusinessDetails() {
@@ -14,20 +29,49 @@ async function loadBusinessDetails() {
         const data = await apiCall(`/api/businesses/${businessId}`);
         const business = data.business;
 
+        // Load bookmarks if user is logged in
+        const currentUser = await getCurrentUser();
+        if (currentUser) {
+            await loadUserBookmarks();
+        }
+
+        const isBookmarked = userBookmarks.has(business.id);
+
         document.title = `${business.name} - LocalReviews`;
 
         const container = document.getElementById('business-header');
+        const bookmarkBtn = currentUser ? `
+            <button
+                class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}"
+                onclick="event.stopPropagation(); toggleBookmark(${business.id})"
+                aria-label="${isBookmarked ? 'Remove bookmark' : 'Add bookmark'}"
+                title="${isBookmarked ? 'Remove bookmark' : 'Save business'}"
+            >
+                ${isBookmarked ? '⛊' : '⛉'}
+            </button>
+        ` : `
+            <button
+                class="bookmark-btn"
+                onclick="event.stopPropagation(); showLoginPrompt()"
+                aria-label="Login to bookmark"
+                title="Login to save businesses"
+            >
+                ${isBookmarked ? '⛊' : '⛉'}
+            </button>
+        `;
         container.innerHTML = `
             ${business.image_url ? `<img src="${business.image_url}" alt="${business.name}" class="business-detail-image">` : ''}
 
             <h1 class="business-title">${business.name}</h1>
             <span class="business-card-category">${business.category}</span>
-
+            
+            
             <div class="business-rating-summary">
                 <div class="rating-number">${business.average_rating.toFixed(1)}</div>
                 <div class="rating-details">
                     ${createStarRating(Math.round(business.average_rating)).outerHTML}
                     <span class="text-secondary">${business.review_count} reviews</span>
+                    ${bookmarkBtn}
                 </div>
             </div>
 
@@ -167,6 +211,56 @@ function renderReviewPagination(pagination) {
 function goToReviewPage(page) {
     currentReviewPage = page;
     loadReviews();
+}
+
+// Load user's bookmarks
+async function loadUserBookmarks() {
+    try {
+        const data = await apiCall('/api/bookmarks/my/bookmarks');
+        userBookmarks = new Set(data.bookmarks.map(b => b.id));
+    } catch (err) {
+        console.error('Error loading bookmarks:', err);
+        userBookmarks = new Set();
+    }
+}
+
+// Toggle bookmark
+async function toggleBookmark(bId) {
+    try {
+        const isBookmarked = userBookmarks.has(bId);
+
+        if (isBookmarked) {
+            await apiCall(`/api/bookmarks/${bId}`, { method: 'DELETE' });
+            userBookmarks.delete(bId);
+            showAlert('Bookmark removed', 'success');
+        } else {
+            await apiCall('/api/bookmarks', {
+                method: 'POST',
+                body: JSON.stringify({ businessId: bId })
+            });
+            userBookmarks.add(bId);
+            showAlert('Business bookmarked', 'success');
+        }
+
+        // Update the button in the UI
+        const btn = document.querySelector('.bookmark-btn');
+        if (btn) {
+            btn.innerHTML = !isBookmarked ? '⛊' : '⛉';
+            btn.classList.toggle('bookmarked', !isBookmarked);
+            btn.setAttribute('aria-label', !isBookmarked ? 'Remove bookmark' : 'Add bookmark');
+            btn.setAttribute('title', !isBookmarked ? 'Remove bookmark' : 'Save business');
+        }
+    } catch (err) {
+        console.error('Error toggling bookmark:', err);
+        showAlert(err.message || 'Failed to update bookmark', 'error');
+    }
+}
+
+// Show login prompt
+function showLoginPrompt() {
+    if (confirm('Please log in to save businesses. Go to login page?')) {
+        window.location.href = '/login.html';
+    }
 }
 
 // Initialize page

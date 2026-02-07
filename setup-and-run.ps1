@@ -1,42 +1,28 @@
-# ============================================
-# Local Business Reviews - Setup and Run Script (PowerShell)
-# ============================================
-# This PowerShell script will:
-# 1. Check for Node.js and npm installation
-# 2. Install dependencies
-# 3. Initialize the database
-# 4. Start the server
-# 5. Open the application in browser
-# ============================================
-
-# Set error action to stop on errors
 $ErrorActionPreference = "Stop"
 
-Write-Host "This script will set up and run the Local Business Reviews application." -ForegroundColor Cyan
-Write-Host "Please ensure you have an active internet connection." -ForegroundColor Cyan
+Write-Host "This script will set up and run the Local Business Reviews application."
+Write-Host "Please ensure you have an active internet connection." -ForegroundColor Red
 
 Write-Host "============================================" -ForegroundColor Cyan
-Write-Host "Here is the steps that will be performed: (Setup is using PowerShell)" -ForegroundColor Cyan
+Write-Host "Here is the steps that will be performed: (Setup is using PowerShell)"
 Write-Host "--------------------------------------------" -ForegroundColor Cyan
-Write-Host "1. Check for Node.js and npm installation" -ForegroundColor Cyan
-Write-Host "2. Install npm dependencies" -ForegroundColor Cyan
-Write-Host "3. Initialize the database with sample data" -ForegroundColor Cyan
-Write-Host "4. Start the server" -ForegroundColor Cyan
-Write-Host "5. Open the application in your default web browser" -ForegroundColor Cyan
+Write-Host "1. Check for Node.js installation"
+Write-Host "2. Install npm dependencies"
+Write-Host "3. Initialize the database with sample data"
+Write-Host "4. Start the server"
+Write-Host "5. Open the application in your default web browser"
 Write-Host "============================================" -ForegroundColor Cyan
 
 Write-Host "If you see any errors during the setup, please read the README.md file carefully for guidance. Located in the same folder as this script." -ForegroundColor Red
-
-Read-Host -Prompt "Press ENTER to start setup..."
-
-Write-Host "It will start the setup in 2 seconds..." -ForegroundColor Cyan
-Start-Sleep -Seconds 2
+Write-Host ""
+Write-Host "Setup will start the setup in 5 seconds..." -ForegroundColor Cyan
+Start-Sleep -Seconds 5
 
 
 
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Cyan
-Write-Host "Local Business Reviews - Setup Script" -ForegroundColor Cyan
+Write-Host "Local Business Reviews - Setup Script" -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -49,7 +35,7 @@ Write-Host ""
 # ============================================
 # STEP 1: Check for Node.js
 # ============================================
-Write-Host "[1/6] Checking for Node.js..." -ForegroundColor Yellow
+Write-Host "[1/5] Checking for Node.js..." -ForegroundColor Yellow
 
 try {
     $nodeVersion = node --version 2>&1
@@ -62,43 +48,28 @@ try {
     Write-Host "ERROR: Node.js is not installed!" -ForegroundColor Red
     Write-Host ""
     Write-Host "Please install Node.js from: https://nodejs.org/" -ForegroundColor Yellow
+	Write-Host ""
+	Write-Host "After installation, restart your computer and run this script again." -ForegroundColor Yellow
+	Write-Host ""
+	Write-Host "Opening Node.js website in 5 seconds"
+	Starts-sleep 5
+	Start-Process "https://nodejs.org/en/download"
     Write-Host "Download the LTS version and run the installer." -ForegroundColor Yellow
     Write-Host ""
-    Write-Host "After installation, restart your computer and run this script again." -ForegroundColor Yellow
+    
     Write-Host ""
     Read-Host "Press Enter to exit"
     exit 1
 }
 
-Write-Host ""
-
-# ============================================
-# STEP 2: Check for npm
-# ============================================
-Write-Host "[2/6] Checking for npm..." -ForegroundColor Yellow
-
-try {
-    $npmVersion = npm --version 2>&1
-    if ($LASTEXITCODE -ne 0) {
-        throw "npm command failed"
-    }
-    Write-Host "npm is installed: $npmVersion" -ForegroundColor Green
-} catch {
-    Write-Host ""
-    Write-Host "ERROR: npm is not installed!" -ForegroundColor Red
-    Write-Host ""
-    Write-Host "npm usually comes with Node.js. Please reinstall Node.js." -ForegroundColor Yellow
-    Write-Host ""
-    Read-Host "Press Enter to exit"
-    exit 1
-}
 
 Write-Host ""
+Start-Sleep 2
 
 # ============================================
 # STEP 3: Check for package.json
 # ============================================
-Write-Host "[3/6] Checking project files..." -ForegroundColor Yellow
+Write-Host "[2/5] Checking project files..." -ForegroundColor Yellow
 
 if (-not (Test-Path "package.json")) {
     Write-Host ""
@@ -114,11 +85,12 @@ if (-not (Test-Path "package.json")) {
 
 Write-Host "Project files found" -ForegroundColor Green
 Write-Host ""
+Start-Sleep 2
 
 # ============================================
 # STEP 4: Install Dependencies
 # ============================================
-Write-Host "[4/6] Installing npm dependencies..." -ForegroundColor Yellow
+Write-Host "[3/5] Installing npm dependencies..." -ForegroundColor Yellow
 Write-Host "This may take a few minutes..." -ForegroundColor Gray
 Write-Host ""
 
@@ -136,7 +108,9 @@ try {
         throw "npm install failed with exit code $LASTEXITCODE"
     }
     Write-Host ""
+	Write-Host "Ignore any vulnerabilities that might be listed" -ForegroundColor Yellow
     Write-Host "Dependencies installed successfully!" -ForegroundColor Green
+	
 } catch {
     Write-Host ""
     Write-Host "ERROR: Failed to install npm packages!" -ForegroundColor Red
@@ -154,11 +128,12 @@ try {
 }
 
 Write-Host ""
+Start-Sleep 2
 
 # ============================================
 # STEP 5: Initialize Database
 # ============================================
-Write-Host "[5/6] Initializing database..." -ForegroundColor Yellow
+Write-Host "[4/5] Initializing database..." -ForegroundColor Yellow
 Write-Host ""
 
 # Create database folder if it doesn't exist
@@ -191,21 +166,26 @@ if (Test-Path "database\reviews.db") {
 }
 
 Write-Host ""
+Start-Sleep 2
 
 # ============================================
 # STEP 6: Start Server and Open Browser
 # ============================================
-Write-Host "[6/6] Starting server..." -ForegroundColor Yellow
+Write-Host "[5/5] Starting server..." -ForegroundColor Yellow
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host "Setup Complete!" -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Server URL: http://localhost:3000" -ForegroundColor White
+Write-Host "Server URL: http://localhost:3000"
 Write-Host ""
-Write-Host "Sample login credentials:" -ForegroundColor Yellow
-Write-Host "  Email: john@example.com" -ForegroundColor White
-Write-Host "  Password: password123" -ForegroundColor White
+Write-Host "Sample login credentials:" -BackgroundColor Yellow -ForegroundColor Black
+Write-Host "Sample Account 1:" -ForegroundColor Cyan
+Write-Host "  Email: Guest1@guest.com"
+Write-Host "  Password: guest1guest"
+Write-Host "Sample Account 2:" -ForegroundColor Cyan
+Write-Host "  Email: Guest2@guest.com"
+Write-Host "  Password: guest2guest"
 Write-Host ""
 Write-Host "To stop the server, press Ctrl+C in this window." -ForegroundColor Gray
 Write-Host "============================================" -ForegroundColor Cyan
@@ -214,7 +194,7 @@ Write-Host ""
 # Wait 2 seconds then open browser
 Write-Host "Opening browser in 2 seconds..." -ForegroundColor Gray
 Start-Sleep -Seconds 2
-Start-Process "http://localhost:3000"
+Start-Process "http://localhost:3001"
 
 Write-Host ""
 Write-Host "Starting server now..." -ForegroundColor Green

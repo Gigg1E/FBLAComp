@@ -289,6 +289,7 @@
 }
 
 .business-rating-summary {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--spacing-md);

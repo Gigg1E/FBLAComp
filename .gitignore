@@ -1,9 +1,6 @@
 # Node modules
 node_modules/
 
-# Database file
-database/reviews.db
-
 # Environment variables
 .env
 .env.local

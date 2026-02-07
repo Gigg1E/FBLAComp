@@ -10,9 +10,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (signupForm) {
         signupForm.addEventListener('submit', handleSignup);
+        await loadCaptcha();
     }
-
-    await loadCaptcha();
 });
 
 // Load captcha
@@ -112,9 +111,14 @@ async function handleSignup(e) {
 
         const response = await apiCall('/api/auth/signup', {
             method: 'POST',
-            body: JSON.stringify({ email, username, password, role }),
-            captchaId,
-            captchaAnswer
+            body: JSON.stringify({
+                email,
+                username,
+                password,
+                role,
+                captchaId,
+                captchaAnswer
+            })
         });
 
         hideLoading();

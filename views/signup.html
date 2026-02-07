@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Write a Review - LocalReviews</title>
+    <title>Sign Up - Local Business Reviews</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/components.css">
     <link rel="stylesheet" href="/css/forms.css">
@@ -14,49 +14,72 @@
     <header class="header">
         <nav class="nav container">
             <a href="/" class="nav-brand">LocalReviews</a>
-            <ul class="nav-links"></ul>
-            <!-- theme toggle removed; site uses dark theme only -->
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/help.html">Help</a></li>
+                <li><a href="/login.html">Login</a></li>
+            </ul>
         </nav>
     </header>
 
     <main class="content-wrapper">
-        <div class="container-narrow">
-            <h1>Write a Review</h1>
+        <div class="auth-form-container">
+            <div class="auth-form">
+                <div class="auth-form-header">
+                    <h1>Sign Up</h1>
+                    <p class="text-secondary">Create your account to start reviewing local businesses.</p>
+                </div>
 
-            <div class="review-form-container">
                 <div id="error-message" class="alert alert-error" style="display: none;"></div>
 
-                <form id="review-form" class="form">
+                <form id="signup-form" class="form">
                     <div class="form-group">
-                        <label class="form-label form-label-required">Your Rating</label>
-                        <div id="rating-input"></div>
-                        <div class="form-error" id="rating-error" style="display: none;"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="title" class="form-label form-label-required">Review Title</label>
+                        <label for="email" class="form-label form-label-required">Email</label>
                         <input
-                            type="text"
-                            id="title"
+                            type="email"
+                            id="email"
+                            name="email"
                             class="form-input"
-                            placeholder="Sum up your experience"
+                            placeholder="Enter your email"
                             required
                         >
+                        <div class="form-error" id="email-error" style="display: none;"></div>
                     </div>
 
                     <div class="form-group">
-                        <label for="reviewText" class="form-label form-label-required">Your Review</label>
-                        <textarea
-                            id="reviewText"
-                            class="form-textarea"
-                            placeholder="Share details about your experience (minimum 20 characters)"
+                        <label for="username" class="form-label form-label-required">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            class="form-input"
+                            placeholder="Choose a username"
                             required
-                            minlength="20"
-                            maxlength="1000"
-                        ></textarea>
-                        <div class="form-help">
-                            <span id="char-count">0</span> / 1000 characters
-                        </div>
+                        >
+                        <div class="form-error" id="username-error" style="display: none;"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label form-label-required">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-input"
+                            placeholder="Create a password (min 8 characters)"
+                            required
+                        >
+                        <div class="form-help">Password must be at least 8 characters long.</div>
+                        <div class="form-error" id="password-error" style="display: none;"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role" class="form-label form-label-required">Account Type</label>
+                        <select id="role" name="role" class="form-select" required>
+                            <option value="user">Regular User</option>
+                            <option value="business_owner">Business Owner</option>
+                        </select>
+                        <div class="form-help">Choose "Business Owner" if you want to post deals for your business.</div>
                     </div>
 
                     <div class="form-group">
@@ -73,10 +96,13 @@
                     </div>
 
                     <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
                     </div>
                 </form>
+
+                <div class="auth-form-footer">
+                    <p>Already have an account? <a href="/login.html">Login here</a></p>
+                </div>
             </div>
         </div>
     </main>
@@ -119,6 +145,6 @@
     </footer>
 
     <script src="/js/utils.js"></script>
-    <script src="/js/review-form.js"></script>
+    <script src="/js/auth.js"></script>
 </body>
 </html>

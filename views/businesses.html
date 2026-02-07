@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Details - LocalReviews</title>
+    <title>Browse Businesses - LocalReviews</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/components.css">
     <link rel="stylesheet" href="/css/forms.css">
@@ -15,24 +15,45 @@
         <nav class="nav container">
             <a href="/" class="nav-brand">LocalReviews</a>
             <ul class="nav-links"></ul>
-            <!-- theme toggle removed; site uses dark theme only -->
         </nav>
     </header>
 
     <main class="content-wrapper">
         <div class="container">
-            <div id="business-header" class="business-header"></div>
+            <h1>Browse Businesses</h1>
 
-            <div id="deals-section" class="mb-lg"></div>
-
-            <section class="mb-lg">
-                <div class="flex-between mb-md">
-                    <h2>Reviews</h2>
-                    <button id="write-review-btn" class="btn btn-primary" style="display: none;">Write a Review</button>
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label for="search" class="form-label">Search</label>
+                    <input
+                        type="text"
+                        id="search"
+                        class="form-input"
+                        placeholder="Search businesses..."
+                    >
                 </div>
-                <div id="reviews-container"></div>
-                <div id="reviews-pagination" class="pagination"></div>
-            </section>
+
+                <div class="filter-group">
+                    <label for="category" class="form-label">Category</label>
+                    <select id="category" class="form-select">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="city" class="form-label">City</label>
+                    <input
+                        type="text"
+                        id="city"
+                        class="form-input"
+                        placeholder="Filter by city..."
+                    >
+                </div>
+            </div>
+
+            <div id="businesses-container" class="grid grid-cols-3"></div>
+
+            <div id="pagination" class="pagination"></div>
         </div>
     </main>
 
@@ -74,6 +95,6 @@
     </footer>
 
     <script src="/js/utils.js"></script>
-    <script src="/js/business-detail.js"></script>
+    <script src="/js/business-list.js"></script>
 </body>
 </html>
