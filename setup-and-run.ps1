@@ -186,6 +186,15 @@ Write-Host "  Password: guest1guest"
 Write-Host "Sample Account 2:" -ForegroundColor Cyan
 Write-Host "  Email: Guest2@guest.com"
 Write-Host "  Password: guest2guest"
+Write-Host "Sample Account 3:" -ForegroundColor Cyan
+Write-Host "  Email: Guest3@guest.com"
+Write-Host "  Password: guest3guest"
+Write-Host "Sample Account 4:" -ForegroundColor Cyan
+Write-Host "  Email: Guest4@guest.com"
+Write-Host "  Password: guest4guest"
+Write-Host "Sample Account 5:" -ForegroundColor Cyan
+Write-Host "  Email: Guest5@guest.com"
+Write-Host "  Password: guest5guest"
 Write-Host ""
 Write-Host "To stop the server, press Ctrl+C in this window." -ForegroundColor Gray
 Write-Host "============================================" -ForegroundColor Cyan
