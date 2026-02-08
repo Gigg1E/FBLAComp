@@ -177,7 +177,7 @@ Write-Host "============================================" -ForegroundColor Cyan
 Write-Host "Setup Complete!" -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Server URL: http://localhost:3000"
+Write-Host "Server URL: http://localhost:3001"
 Write-Host ""
 Write-Host "Sample login credentials:" -BackgroundColor Yellow -ForegroundColor Black
 Write-Host "Sample Account 1:" -ForegroundColor Cyan
