@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Business Reviews - Find and Review Local Businesses</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/pages.css"> 
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="nav-brand">LocalReviews</a>
+            <ul class="nav-links">
+                <!-- Navigation will be updated by JavaScript -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">Find Local Businesses You'll Love</h1>
+                <p class="hero-subtitle">Read reviews, Find great deals, and support local businesses</p>
+                <div class="hero-search">
+                    <form id="search-form" action="/businesses.html" method="GET">
+                        <div class="search-input">
+                            <span class="search-icon"> </span>
+                            <!---->
+                            <input
+                                type="text"
+                                name="search"
+                                class="form-input"
+                                placeholder="Search for businesses..."
+                            >
+                            
+                        </div>
+                    </form>
+                </div>
+                <div class="hero-scroll mt-lg">
+                    <a id="search-btn" class="btn btn-outline">Search</a>
+                </div>
+                <div class="hero-arrow" aria-hidden="true">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <div class="container content-wrapper">
+            <!-- Stats Section (simplified / removed big counters) -->
+                <section id="stats" class="stats-section reveal">
+                    <div class="stat-card" style="display:none;"> <!-- kept hidden for possible future use -->
+                    </div>
+                </section>
+
+            <section class="mb-xl reveal">
+                <div class="featured-section-container">
+                    <h2 class="section-title">Featured Businesses</h2>
+                    <div id="featured-businesses" class="grid grid-cols-3">
+                        <!-- Businesses will be loaded here -->
+                    </div>
+                    <div class="text-center mt-lg">
+                        <a href="/businesses.html" class="btn btn-primary" id="view-all-businesses">View All Businesses</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-xl reveal">
+                <div class="deals-section-container">
+                    <h2 class="section-title">Active Deals</h2>
+                    <div id="active-deals" class="deals-grid">
+                        <!-- Deals will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Info Section -->
+            <section class="info-section mb-xl reveal">
+                <div class="info-section-container">
+                    <h2 class="section-title">How It Works</h2>
+                    <div class="info-grid info-vertical">
+                        <div class="info-row">
+                            <h3>Browse & Search</h3>
+                            <p>Search for local businesses by name, category, or location. Filter results to find exactly what you're looking for.</p>
+                            <a class="link-quiet" href="/businesses.html">Learn more</a>
+                        </div>
+                        <div class="info-row">
+                            <h3>Read Reviews</h3>
+                            <p>Check out detailed reviews and ratings from real customers. See what others think about local businesses.</p>
+                            <a class="link-quiet" href="/business-detail.html">See example</a>
+                        </div>
+                        <div class="info-row">
+                            <h3>Share Your Experience</h3>
+                            <p>Leave your own reviews and help other community members make informed decisions about local businesses.</p>
+                            <a class="link-quiet" href="/signup.html">Get started</a>
+                        </div>
+                        <div class="info-row">
+                            <h3>Find Great Deals</h3>
+                            <p>Discover exclusive deals and offers posted by local business owners. Save money while supporting local.</p>
+                            <a class="link-quiet" href="/deals.html">Browse deals</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-nav container">
+            <div>
+                <a href="/" class="footer-brand">LocalReviews</a>
+                <p>Your number one reliable review site.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-group">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/businesses.html">Browse Businesses</a></li>
+                        <li><a href="/help.html">Help Center</a></li>
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </div>
+                <div class="footer-group">
+                    <h4>Account</h4>
+                    <ul>
+                        <li><a href="/login.html">Login</a></li>
+                        <li><a href="/signup.html">Sign Up</a></li>
+                        <li><a href="/my-account.html">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-group">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:support@localreviews.com">support@localreviews.com</a></li> <!-- Example email -->
+                        <li><a href="tel:+1234567890">+1 (234) 567-890</a></li> <!-- Example phone number -->
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-legal">
+                <p>&copy; 2025 LocalReviews</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/utils.js"></script>
+    <script>
+        // Load featured businesses
+        async function loadFeaturedBusinesses() {
+            try {
+                const data = await apiCall('/api/businesses?limit=6');
+                const container = document.getElementById('featured-businesses');
+
+                if (data.businesses.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><p>No businesses found</p></div>';
+                    return;
+                }
+
+                container.innerHTML = data.businesses.map(business => `
+                    <div class="card business-card" onclick="window.location.href='/business-detail.html?id=${business.id}'">
+                        <span class="business-card-category">${business.category}</span>
+                        <h3 class="card-title">${business.name}</h3>
+                        <div class="flex gap-sm mb-sm">
+                            ${createStarRating(Math.round(business.average_rating)).outerHTML}
+                            <span class="text-secondary text-sm">(${business.review_count} reviews)</span>
+                        </div>
+                        <p class="text-secondary text-sm">${business.city}, ${business.state}</p>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Error loading businesses:', err);
+            }
+        }
+
+        // Load active deals
+        async function loadActiveDeals() {
+            try {
+                const data = await apiCall('/api/deals?limit=3');
+                const container = document.getElementById('active-deals');
+
+                if (data.deals.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><p>No active deals at the moment</p></div>';
+                    return;
+                }
+
+                container.innerHTML = data.deals.map(deal => `
+                    <div class="card deal-card" onclick="window.location.href='/business-detail.html?id=${deal.business_id}'">
+                        <div class="deal-card-header">
+                            <div>
+                                <p class="deal-business">${deal.business_name}</p>
+                                <h3 class="deal-title">${deal.title}</h3>
+                            </div>
+                            <div class="deal-tag">${deal.discount_amount}</div>
+                        </div>
+                        <p class="text-secondary">${deal.description}</p>
+                        <p class="deal-dates text-sm">Valid until ${formatDate(deal.end_date)}</p>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Error loading deals:', err);
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', async () => {
+            await initializePage();
+            loadFeaturedBusinesses();
+            loadActiveDeals();
+
+            document.getElementById('search-btn').addEventListener('click', () => {
+                document.getElementById('search-form').submit();
+            });
+        });
+    </script>
+</body>
+</html>
