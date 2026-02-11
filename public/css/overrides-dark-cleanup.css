@@ -1,6 +1,5 @@
-/* Strong overrides for dark theme to remove any accidental blue/neon artifacts
-   and enforce neutral/warm shadows and borders. Loaded after other CSS.
-*/
+/* Enhanced dark theme overrides with vibrant accent colors */
+
 html[data-theme="dark"] {
     /* Force neutral/warm shadow tokens if needed */
 }
@@ -12,15 +11,24 @@ html[data-theme="dark"] .review-card,
 html[data-theme="dark"] .info-card,
 html[data-theme="dark"] .auth-form {
     background: var(--bg-primary) !important;
-    border: 1px solid rgba(232,228,222,0.15) !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+    border: 1px solid rgba(0, 217, 255, 0.15) !important;
+    box-shadow: 0 4px 16px rgba(255, 107, 53, 0.15) !important;
 }
 
 html[data-theme="dark"] .deal-card {
     background: var(--bg-primary) !important;
-    border: 1px solid rgba(212,165,116,0.25) !important;
-    border-left: 4px solid var(--warning-color) !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+    border: 2px solid rgba(255, 107, 53, 0.4) !important;
+    border-left: 4px solid var(--primary-color) !important;
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.2) !important;
+}
+
+html[data-theme="dark"] .btn-primary {
+    background: var(--gradient-primary) !important;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4) !important;
+}
+
+html[data-theme="dark"] .btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6) !important;
 }
 
 /* Info rows should have NO background or border */
@@ -35,7 +43,8 @@ html[data-theme="dark"] .form-input:focus,
 html[data-theme="dark"] .form-select:focus,
 html[data-theme="dark"] .form-textarea:focus,
 html[data-theme="dark"] :focus {
-    box-shadow: 0 0 0 3px rgba(122,92,72,0.10) !important;
+    box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.15) !important;
+    border-color: var(--secondary-color) !important;
     outline: none !important;
 }
 
@@ -44,4 +53,16 @@ html[data-theme="dark"] .alert-info {
     background-color: rgba(250,244,238,0.03) !important;
     border-color: rgba(200,180,160,0.04) !important;
     color: var(--text-primary) !important;
+}
+
+html[data-theme="dark"] .alert-success {
+    background-color: rgba(118, 255, 3, 0.1) !important;
+    border-color: rgba(118, 255, 3, 0.4) !important;
+    color: var(--success-color) !important;
+}
+
+html[data-theme="dark"] .alert-error {
+    background-color: rgba(255, 56, 96, 0.1) !important;
+    border-color: rgba(255, 56, 96, 0.4) !important;
+    color: var(--error-color) !important;
 }

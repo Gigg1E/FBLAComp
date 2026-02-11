@@ -162,13 +162,16 @@
 
                 container.innerHTML = data.businesses.map(business => `
                     <div class="card business-card" onclick="window.location.href='/business-detail.html?id=${business.id}'">
-                        <span class="business-card-category">${business.category}</span>
-                        <h3 class="card-title">${business.name}</h3>
-                        <div class="flex gap-sm mb-sm">
-                            ${createStarRating(Math.round(business.average_rating)).outerHTML}
-                            <span class="text-secondary text-sm">(${business.review_count} reviews)</span>
+                        ${business.image_url ? `<img src="${business.image_url}" alt="${business.name}" class="business-card-image">` : ''}
+                        <div class="business-card-content">
+                            <span class="business-card-category">${business.category}</span>
+                            <h3 class="card-title">${business.name}</h3>
+                            <div class="flex gap-sm mb-sm">
+                                ${createStarRating(Math.round(business.average_rating)).outerHTML}
+                                <span class="text-secondary text-sm">(${business.review_count} reviews)</span>
+                            </div>
+                            <p class="text-secondary text-sm">${business.city}, ${business.state}</p>
                         </div>
-                        <p class="text-secondary text-sm">${business.city}, ${business.state}</p>
                     </div>
                 `).join('');
             } catch (err) {

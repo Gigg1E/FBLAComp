@@ -209,16 +209,20 @@ function createBusinessCard(business, currentUser) {
 
     return `
         <div class="card business-card" onclick="window.location.href='/business-detail.html?id=${business.id}'">
-            ${bookmarkBtn}
             ${business.image_url ? `<img src="${business.image_url}" alt="${business.name}" class="business-card-image">` : ''}
-            <span class="business-card-category">${business.category}</span>
-            <h3 class="card-title">${business.name}</h3>
-            <div class="flex gap-sm mb-sm">
-                ${createStarRating(Math.round(business.average_rating)).outerHTML}
-                <span class="text-secondary text-sm">(${business.review_count} reviews)</span>
+            <div class="business-card-content">
+                <div class="business-card-header">
+                    <span class="business-card-category">${business.category}</span>
+                    ${bookmarkBtn}
+                </div>
+                <h3 class="card-title">${business.name}</h3>
+                <div class="flex gap-sm mb-sm">
+                    ${createStarRating(Math.round(business.average_rating)).outerHTML}
+                    <span class="text-secondary text-sm">(${business.review_count} reviews)</span>
+                </div>
+                <p class="text-secondary text-sm">${business.city}, ${business.state}</p>
+                ${business.description ? `<p class="text-secondary">${business.description.substring(0, 100)}...</p>` : ''}
             </div>
-            <p class="text-secondary text-sm">${business.city}, ${business.state}</p>
-            ${business.description ? `<p class="text-secondary">${business.description.substring(0, 100)}...</p>` : ''}
         </div>
     `;
 }

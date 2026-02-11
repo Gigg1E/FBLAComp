@@ -1,24 +1,25 @@
-/* CSS Variables - Dark Theme */
+/* CSS Variables - Enhanced Dark Theme with Vibrant Colors */
 :root {
-    /* Complementary color palette: Warm orange/brown with cool teal-blue and sage green */
-    --accent-color: #8fb89d; /* soft sage green - navbar accent */
+    /* Vibrant complementary palette: Bold orange/coral with electric teal and lime green */
+    --accent-color: #00d9ff; /* electric cyan - vibrant accent */
+    --accent-color-secondary: #76ff03; /* lime green - secondary accent */
 
-    --primary-color: #d4956c; /* warm terracotta/orange */
-    --primary-hover: #e6a77a; /* lighter warm orange hover */
-    --secondary-color: #7d9ba6; /* cool teal-blue complement */
-    --success-color: #7ea88c; /* sage green */
-    --error-color: #c97a6b; /* warm coral error */
-    --warning-color: #d4a574; /* golden amber */
+    --primary-color: #ff6b35; /* vibrant coral-orange */
+    --primary-hover: #ff8555; /* lighter vibrant orange on hover */
+    --secondary-color: #00d4ff; /* electric cyan-blue */
+    --success-color: #76ff03; /* vibrant lime green */
+    --error-color: #ff3860; /* vibrant hot pink/red */
+    --warning-color: #ffb700; /* bright golden amber */
 
-    --text-primary: #e8e4de; /* warm off-white - highly readable */
-    --text-secondary: #b8aea4; /* warm mid-grey */
-    --text-light: #9a918a; /* muted warm grey */
+    --text-primary: #f0f4f8; /* bright off-white - maximum readability */
+    --text-secondary: #a8bfc9; /* lighter cool grey */
+    --text-light: #7a8fa0; /* muted cool grey */
 
-    --bg-primary: #1f2326; /* medium-dark slate cards - readable */
-    --bg-secondary: #181b1e; /* dark background */
-    --bg-tertiary: rgba(212,149,108,0.08); /* warm orange tint */
+    --bg-primary: #0f1621; /* dark navy-black cards */
+    --bg-secondary: #0a0e14; /* darker background */
+    --bg-tertiary: rgba(255, 107, 53, 0.12); /* vibrant orange tint */
 
-    --border-color: rgba(232,228,222,0.12); /* visible borders */
+    --border-color: rgba(0, 217, 255, 0.2); /* cyan-tinted borders */
     --border-radius: 8px;
     --border-radius-sm: 4px;
 
@@ -35,11 +36,15 @@
     --font-size-xl: 24px;
     --font-size-2xl: 32px;
 
-    --shadow-sm: 0 4px 12px rgba(0,0,0,0.3);
-    --shadow-md: 0 8px 20px rgba(0,0,0,0.4);
-    --shadow-lg: 0 16px 32px rgba(0,0,0,0.5);
+    --shadow-sm: 0 4px 12px rgba(0, 217, 255, 0.15);
+    --shadow-md: 0 8px 20px rgba(255, 107, 53, 0.2);
+    --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.6);
 
     --max-width: 1200px;
+    
+    /* Gradient accents */
+    --gradient-primary: linear-gradient(135deg, #ff6b35 0%, #ff8555 100%);
+    --gradient-accent: linear-gradient(135deg, #00d9ff 0%, #76ff03 100%);
 }
 
 /* Reset */
@@ -386,3 +391,47 @@ a:hover {
         grid-template-columns: 1fr;
     }
 }
+
+    /* Animated background — geometric mesh grid (fast, vibrant) */
+    @keyframes mesh-shift {
+        0% {
+            background-position: 0 0, 0 0, 0 0, 0 0;
+            opacity: 0.48;
+        }
+        50% {
+            background-position: 60px 60px, -40px 40px, 80px 0, 30px 30px;
+            opacity: 0.54;
+        }
+        100% {
+            background-position: 0 0, 0 0, 0 0, 0 0;
+            opacity: 0.48;
+        }
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        pointer-events: none;
+        background-image:
+            linear-gradient(0deg, rgba(0,217,255,0.18) 1.5px, transparent 1.5px),
+            linear-gradient(90deg, rgba(255,107,53,0.16) 1.5px, transparent 1.5px),
+            radial-gradient(circle at 25% 40%, rgba(255,107,53,0.12) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(76,255,3,0.08) 0%, transparent 50%);
+        background-size: 50px 50px, 50px 50px, 500px 500px, 600px 600px;
+        background-position: 0 0, 0 0, 0 0, 0 0;
+        filter: blur(0.4px) saturate(130%);
+        opacity: 0.48;
+        transform: translate3d(0,0,0);
+        will-change: background-position, opacity;
+        animation: mesh-shift 6s ease-in-out infinite;
+    }
+
+
+
+    @media (prefers-reduced-motion: reduce) {
+        body::before {
+            animation: none;
+        }
+    }
