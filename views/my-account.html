@@ -176,47 +176,49 @@
 
                     <div id="deals-list"></div>
 
-                    <!-- Deal form -->
-                    <div id="deal-form-container" style="display:none;">
-                        <h3 id="deal-form-title">Add New Deal</h3>
-                        <div id="deal-errors" class="alert alert-error" style="display:none;"></div>
-                        <div id="deal-success" class="alert alert-success" style="display:none;"></div>
+                    <!-- Deal form modal -->
+                    <div id="deal-form-modal" class="modal-overlay" style="display:none;">
+                        <div class="modal">
+                            <h2 id="deal-form-title">Add New Deal</h2>
+                            <div id="deal-errors" class="alert alert-error" style="display:none;"></div>
+                            <div id="deal-success" class="alert alert-success" style="display:none;"></div>
 
-                        <form id="deal-form" class="form">
-                            <input type="hidden" id="deal-id">
+                            <form id="deal-form" class="form">
+                                <input type="hidden" id="deal-id">
 
-                            <div class="form-group">
-                                <label for="deal-title" class="form-label form-label-required">Deal Title</label>
-                                <input type="text" id="deal-title" class="form-input" required placeholder="e.g., 2-for-1 Pizza Tuesday">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="deal-description" class="form-label form-label-required">Description</label>
-                                <textarea id="deal-description" class="form-textarea" required placeholder="Describe the deal in detail..."></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="deal-discount" class="form-label">Discount Amount</label>
-                                <input type="text" id="deal-discount" class="form-input" placeholder="e.g., 20% off, BOGO, $10 off">
-                            </div>
-
-                            <div class="form-row">
                                 <div class="form-group">
-                                    <label for="deal-start" class="form-label form-label-required">Start Date</label>
-                                    <input type="date" id="deal-start" class="form-input" required>
+                                    <label for="deal-title" class="form-label form-label-required">Deal Title</label>
+                                    <input type="text" id="deal-title" class="form-input" required placeholder="e.g., 2-for-1 Pizza Tuesday">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="deal-end" class="form-label form-label-required">End Date</label>
-                                    <input type="date" id="deal-end" class="form-input" required>
+                                    <label for="deal-description" class="form-label form-label-required">Description</label>
+                                    <textarea id="deal-description" class="form-textarea" required placeholder="Describe the deal in detail..."></textarea>
                                 </div>
-                            </div>
 
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary">Save Deal</button>
-                                <button type="button" class="btn btn-secondary" id="cancel-deal-btn">Cancel</button>
-                            </div>
-                        </form>
+                                <div class="form-group">
+                                    <label for="deal-discount" class="form-label">Discount Amount</label>
+                                    <input type="text" id="deal-discount" class="form-input" placeholder="e.g., 20% off, BOGO, $10 off">
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="deal-start" class="form-label form-label-required">Start Date</label>
+                                        <input type="date" id="deal-start" class="form-input" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="deal-end" class="form-label form-label-required">End Date</label>
+                                        <input type="date" id="deal-end" class="form-input" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Save Deal</button>
+                                    <button type="button" class="btn btn-secondary" id="cancel-deal-btn">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

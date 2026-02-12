@@ -1,9 +1,10 @@
 /* Strong overrides for dark theme to remove any accidental blue/neon artifacts
    and enforce neutral/warm shadows and borders. Loaded after other CSS.
 */
+/*
 html[data-theme="dark"] {
-    /* Force neutral/warm shadow tokens if needed */
 }
+*/
 
 html[data-theme="dark"] .card,
 html[data-theme="dark"] .stat-card,

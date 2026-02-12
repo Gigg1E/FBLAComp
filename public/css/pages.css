@@ -195,6 +195,32 @@
     padding: var(--spacing-xl);
     border: 1px solid rgba(212,165,116,0.1);
 }
+/**/
+.featured-section-container {
+    background: linear-gradient(135deg, rgb(118, 84, 61, 0.636) 0%, rgba(55, 71, 58, 0.636) 100%);
+    border-radius: 12px;
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid rgba(0, 217, 255, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 217, 255, 0.1);
+}
+
+.deals-section-container {
+    background: linear-gradient(135deg, rgb(118, 84, 61, 0.636) 0%, rgba(55, 71, 58, 0.636) 100%);
+    border-radius: 12px;
+    padding: var(--spacing-xl);
+    border: 2px solid rgba(255, 107, 53, 0.25);
+    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.12);
+}
+
+.info-section-container {
+    background: linear-gradient(135deg, rgb(118, 84, 61, 0.636) 0%, rgba(55, 71, 58, 0.636) 100%);
+    border-radius: 12px;
+    padding: var(--spacing-xl);
+    border: 1px solid rgba(118, 255, 3, 0.1);
+}
+
+/**/
 
 .info-section-container {
     background-color: rgba(24,27,30,0.5);
@@ -568,25 +594,7 @@
     margin-top: var(--spacing-lg);
 }
 
-/* Deal management table */
-.deals-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: var(--spacing-md);
-}
-
-.deals-table th,
-.deals-table td {
-    padding: var(--spacing-md);
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.deals-table th {
-    background-color: var(--bg-secondary);
-    font-weight: 600;
-}
-
+/* Deal actions buttons */
 .deal-actions {
     display: flex;
     gap: var(--spacing-sm);

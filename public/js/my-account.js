@@ -159,7 +159,7 @@ async function loadMyReviews() {
                 <div class="review-header">
                     <div>
                         <div class="review-author">
-                            <a href="/business.html?id=${review.business_id}">${review.business_name}</a>
+                            <a href="/business-details.html?id=${review.business_id}">${review.business_name}</a>
                         </div>
                         ${renderStars(review.rating)}
                     </div>
@@ -536,33 +536,24 @@ async function loadMyDeals() {
             return;
         }
 
-        dealsListDiv.innerHTML = `
-            <table class="deals-table">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Discount</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${data.deals.map(deal => `
-                        <tr>
-                            <td>${escapeHtml(deal.title)}</td>
-                            <td>${deal.discount_amount ? escapeHtml(deal.discount_amount) : '-'}</td>
-                            <td>${formatDate(deal.start_date)}</td>
-                            <td>${formatDate(deal.end_date)}</td>
-                            <td class="deal-actions">
-                                <button class="btn btn-sm btn-outline" onclick="editDeal(${deal.id})">Edit</button>
-                                <button class="btn btn-sm btn-secondary" onclick="deleteDeal(${deal.id})">Delete</button>
-                            </td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        `;
+        dealsListDiv.innerHTML = data.deals.map(deal => `
+            <div class="card deal-card mb-lg">
+                <div class="deal-card-header">
+                    <div>
+                        <h3 class="deal-title">${escapeHtml(deal.title)}</h3>
+                        ${deal.discount_amount ? `<div class="deal-tag">${escapeHtml(deal.discount_amount)}</div>` : ''}
+                    </div>
+                </div>
+                ${deal.description ? `<p class="text-secondary">${escapeHtml(deal.description)}</p>` : ''}
+                <div class="deal-dates text-sm">
+                    <strong>Valid:</strong> ${formatDate(deal.start_date)} - ${formatDate(deal.end_date)}
+                </div>
+                <div class="deal-actions" style="margin-top: var(--spacing-md);">
+                    <button class="btn btn-sm btn-outline" onclick="editDeal(${deal.id})">Edit</button>
+                    <button class="btn btn-sm btn-secondary" onclick="deleteDeal(${deal.id})">Delete</button>
+                </div>
+            </div>
+        `).join('');
     } catch (err) {
         console.error('Error loading deals:', err);
         showError('deals-list', 'Failed to load deals');
@@ -573,7 +564,7 @@ async function loadMyDeals() {
 function showDealForm(deal = null) {
     editingDeal = deal;
 
-    document.getElementById('deal-form-container').style.display = 'block';
+    document.getElementById('deal-form-modal').style.display = 'block';
     document.getElementById('deal-errors').style.display = 'none';
     document.getElementById('deal-success').style.display = 'none';
 
@@ -603,7 +594,7 @@ async function editDeal(dealId) {
 }
 
 function cancelDealForm() {
-    document.getElementById('deal-form-container').style.display = 'none';
+    document.getElementById('deal-form-modal').style.display = 'none';
     editingDeal = null;
 }
 
@@ -739,6 +730,25 @@ function setupEventListeners() {
     const businessImageInput = document.getElementById('business-image');
     if (businessImageInput) {
         businessImageInput.addEventListener('change', handleFileSelect);
+    }
+
+    // Close modals when clicking outside
+    const businessFormModal = document.getElementById('business-form-modal');
+    if (businessFormModal) {
+        businessFormModal.addEventListener('click', (e) => {
+            if (e.target === businessFormModal) {
+                closeBusinessModal();
+            }
+        });
+    }
+
+    const dealFormModal = document.getElementById('deal-form-modal');
+    if (dealFormModal) {
+        dealFormModal.addEventListener('click', (e) => {
+            if (e.target === dealFormModal) {
+                cancelDealForm();
+            }
+        });
     }
 }
 

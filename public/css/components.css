@@ -18,26 +18,31 @@
 }
 
 .btn-primary {
-    background-color: var(--primary-color);
+    background: var(--primary-color);
     color: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+    font-weight: 600;
 }
 
 .btn-primary:hover:not(:disabled) {
-    background-color: var(--primary-hover);
+    background: linear-gradient(135deg, #ff8555 0%, #ff9f6e 100%);
     color: white;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
 }
 
 .btn-secondary {
-    background-color: var(--secondary-color);
-    color: white;
+    background-color: var(--accent-color);
+    color: #0a0e14;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(147, 254, 167, 0.3);
 }
 
 .btn-secondary:hover:not(:disabled) {
-    background-color: #475569;
-    color: white;
+    background-color: #5cb779;
+    color: #0a0e14;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 150, 113, 0.23);
 }
 
 .btn-outline {
@@ -47,10 +52,10 @@
 }
 
 .btn-outline:hover:not(:disabled) {
-    /* use a subtle tertiary background so text stays visible in light/dark */
-    background-color: var(--bg-tertiary);
+    background: rgba(255, 107, 53, 0.1);
     color: var(--primary-color);
-    border-color: var(--primary-color);
+    border-color: var(--primary-hover);
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
 }
 
 .btn-sm {
@@ -78,15 +83,32 @@
     transition: all 240ms cubic-bezier(.2,.9,.2,1);
 }
 
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-accent);
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+
 .card:hover {
-    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.2);
     transform: translateY(-4px);
+    border-color: rgba(77, 117, 83, 0.4);
 }
 
 .card-header {
     border-bottom: 1px solid var(--border-color);
     padding-bottom: var(--spacing-md);
     margin-bottom: var(--spacing-md);
+}
+
+.card:hover::before {
+    opacity: 1;
 }
 
 .card-title {
@@ -110,19 +132,60 @@
     position: relative;
     cursor: pointer;
     transition: transform 240ms cubic-bezier(.2,.9,.2,1), box-shadow 240ms cubic-bezier(.2,.9,.2,1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.business-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(77, 117, 83, 0.4), transparent);
+    transition: left 600ms ease;
+    pointer-events: none;
 }
 
 .business-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(255, 119, 70, 0.174), inset 0 0 20px rgba(0, 217, 255, 0.08);
+    border-color: rgba(255, 107, 53, 0.3);
 }
 
+.business-card-image {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    margin: 0;
+    padding: 0;
+    display: block;
+    position: relative;
+    filter: brightness(0.9) contrast(1.1);
+    transition: filter 300ms ease;
+}
+/*
 .business-card-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
     border-radius: var(--border-radius) var(--border-radius) 0 0;
     margin: calc(var(--spacing-xl) * -1) calc(var(--spacing-xl) * -1) var(--spacing-lg) calc(var(--spacing-xl) * -1);
+}
+*/
+
+.business-card:hover .business-card-image {
+    filter: brightness(1) contrast(1.15);
+}
+
+.business-card-content {
+    padding: var(--spacing-lg);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
 }
 
 .business-detail-image {
@@ -134,12 +197,19 @@
 
 .business-card-category {
     display: inline-block;
-    padding: 4px 12px;
-    background-color: var(--bg-secondary);
-    border-radius: 12px;
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-sm);
+    padding: 6px 12px;
+    background: linear-gradient(135deg, rgba(212,149,108,0.12) 0%, rgba(143,184,157,0.08) 100%);
+    border: 1px solid rgba(255, 107, 53, 0.201);
+    border-radius: 16px;
+    font-size: 11px;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+    margin-top: 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    display: inline-block;
 }
 
 /* Bookmark button on business cards */
@@ -403,8 +473,19 @@
 }
 
 .deal-card {
+    background-color: var(--bg-primary);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
     border: 1px solid rgba(212,165,116,0.25);
     border-left: 4px solid var(--warning-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 240ms cubic-bezier(.2,.9,.2,1);
+}
+
+.deal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(212,165,116,0.3);
+    border-color: rgba(212,165,116,0.4);
 }
 
 /* Empty state */

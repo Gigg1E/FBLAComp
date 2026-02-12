@@ -1,6 +1,7 @@
 /* CSS Variables - Dark Theme */
 :root {
     /* Complementary color palette: Warm orange/brown with cool teal-blue and sage green */
+
     --accent-color: #8fb89d; /* soft sage green - navbar accent */
 
     --primary-color: #d4956c; /* warm terracotta/orange */
@@ -236,6 +237,29 @@ a:hover {
 
 /* Responsive design */
 @media (max-width: 768px) {
+    :root {
+        --font-size-2xl: 24px;
+        --font-size-xl: 20px;
+        --spacing-xl: 24px;
+    }
+
+    .nav {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .grid-cols-2,
+    .grid-cols-3,
+    .grid-cols-4 {
+        grid-template-columns: 1fr;
+    }
+
+
     .footer-nav {
         flex-direction: column;
         align-items: center;
@@ -249,6 +273,45 @@ a:hover {
 
     .footer-legal {
         text-align: center;
+    }
+}
+
+@keyframes mesh-shift {
+    0% {
+        background-position: 0 0, 0 0, 0 0, 0 0;
+        opacity: 0.48;
+    }
+    50% {
+        background-position: 60px 60px, -40px 40px, 80px 0, 30px 30px;
+        opacity: 0.54;
+    }
+    100% {
+        background-position: 0 0, 0 0, 0 0, 0 0;
+        opacity: 0.48;
+    }
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background-image:
+        linear-gradient(0deg, rgba(0,217,255,0.18) 1.5px, transparent 1.5px),
+        linear-gradient(90deg, rgba(255,107,53,0.16) 1.5px, transparent 1.5px);
+    background-size: 50px 50px, 50px 50px, 500px 500px, 600px 600px;
+    background-position: 0 0, 0 0, 0 0, 0 0;
+    filter: blur(0.4px) saturate(130%);
+    opacity: 0.48;
+    transform: translate3d(0,0,0);
+    will-change: background-position, opacity;
+    animation: mesh-shift 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before {
+        animation: none;
     }
 }
 
@@ -309,7 +372,7 @@ a:hover {
 .mt-md { 
     margin-top: var(--spacing-md); 
     padding: 1.2rem;
-    border: solid 2px #52bcf0;
+    border: solid 2px #546d5ab9;
     border-radius: 20px;
 }
 .mt-lg { margin-top: var(--spacing-lg); }
